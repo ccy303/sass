@@ -1,0 +1,432 @@
+@font-face {
+    font-family: "cui-iconfont";
+    src: url("@/gxota/ui/iconfont/font.woff2") format("woff2"), url("@/gxota/ui/iconfont/font.woff") format("woff"),
+        url("@/gxota/ui/iconfont/font.ttf") format("truetype");
+}
+
+.cui-icon {
+    font-family: "cui-iconfont";
+    font-size: inherit;
+    font-style: normal;
+    line-height: 1;
+}
+
+.cui-icon-loading-dot:before {
+    content: "\e903";
+}
+
+.cui-icon-loading-spin:before {
+    content: "\e90b";
+}
+
+.cui-icon-loading-snow:before {
+    content: "\e901";
+}
+
+.cui-icon-app:before {
+    content: "\e905";
+}
+
+.cui-icon-payment:before {
+    content: "\e906";
+}
+
+.cui-icon-face-auth:before {
+    content: "\e907";
+}
+
+.cui-icon-folder:before {
+    content: "\e908";
+}
+
+.cui-icon-bill:before {
+    content: "\e90a";
+}
+
+.cui-icon-phone:before {
+    content: "\e904";
+}
+
+.cui-icon-amount-fill:before {
+    content: "\e8f9";
+}
+
+.cui-icon-wallet-fill:before {
+    content: "\e8fa";
+}
+
+.cui-icon-doc-fill:before {
+    content: "\e8fb";
+}
+
+.cui-icon-good-fill:before {
+    content: "\e8f8";
+}
+
+.cui-icon-camera-fill:before {
+    content: "\e8fc";
+}
+
+.cui-icon-mail-fill:before {
+    content: "\e8fd";
+}
+
+.cui-icon-bank-card-fill:before {
+    content: "\e8fe";
+}
+
+.cui-icon-relay-fill:before {
+    content: "\e8f7";
+}
+
+.cui-icon-comment-fill:before {
+    content: "\e634";
+}
+
+.cui-icon-share:before {
+    content: "\e8f3";
+}
+
+.cui-icon-link:before {
+    content: "\e8f4";
+}
+
+.cui-icon-back:before {
+    content: "\e8f5";
+}
+
+.cui-icon-enter:before {
+    content: "\e8f6";
+}
+
+.cui-icon-top:before {
+    content: "\e8ea";
+}
+
+.cui-icon-upgrade:before {
+    content: "\e8eb";
+}
+
+.cui-icon-rise:before {
+    content: "\e8ec";
+}
+
+.cui-icon-decline:before {
+    content: "\e8ed";
+}
+
+.cui-icon-active:before {
+    content: "\e8ee";
+}
+
+.cui-icon-shrink:before {
+    content: "\e8f1";
+}
+
+.cui-icon-cropper:before {
+    content: "\e8f2";
+}
+
+.cui-icon-fullscreen:before {
+    content: "\e8ef";
+}
+
+.cui-icon-enlarge:before {
+    content: "\e8f0";
+}
+
+.cui-icon-chart-pie:before {
+    content: "\e8e6";
+}
+
+.cui-icon-arrow-double-left:before {
+    content: "\e8e7";
+}
+
+.cui-icon-arrow-double-right:before {
+    content: "\e8e8";
+}
+
+.cui-icon-like-fill:before {
+    content: "\e8df";
+}
+
+.cui-icon-like:before {
+    content: "\e8e0";
+}
+
+.cui-icon-my:before {
+    content: "\e8e1";
+}
+
+.cui-icon-eye-open:before {
+    content: "\e8dc";
+}
+
+.cui-icon-friend:before {
+    content: "\e8e2";
+}
+
+.cui-icon-eye-close:before {
+    content: "\e8de";
+}
+
+.cui-icon-cloud-download:before {
+    content: "\e8db";
+}
+
+.cui-icon-cloud-upload:before {
+    content: "\e8da";
+}
+
+.cui-icon-set:before {
+    content: "\e8e4";
+}
+
+.cui-icon-chart-bar:before {
+    content: "\e8d8";
+}
+
+.cui-icon-clock-fill:before {
+    content: "\e8cc";
+}
+
+.cui-icon-favor-fill:before {
+    content: "\e8ce";
+}
+
+.cui-icon-help-fill:before {
+    content: "\e8cf";
+}
+
+.cui-icon-history-fill:before {
+    content: "\e8d0";
+}
+
+.cui-icon-smile-fill:before {
+    content: "\e8d1";
+}
+
+.cui-icon-map-fill:before {
+    content: "\e8d3";
+}
+
+.cui-icon-prompt-fill:before {
+    content: "\e8d4";
+}
+
+.cui-icon-meh-fill:before {
+    content: "\e8d5";
+}
+
+.cui-icon-cry-fill:before {
+    content: "\e8d6";
+}
+
+.cui-icon-success-fill:before {
+    content: "\e8d2";
+}
+
+.cui-icon-delete-fill:before {
+    content: "\e8d7";
+}
+
+.cui-icon-stop:before {
+    content: "\e8c4";
+}
+
+.cui-icon-play:before {
+    content: "\e8c5";
+}
+
+.cui-icon-more:before {
+    content: "\e8c6";
+}
+
+.cui-icon-back-top:before {
+    content: "\e8bb";
+}
+
+.cui-icon-map:before {
+    content: "\e8c7";
+}
+
+.cui-icon-keyboard-9:before {
+    content: "\e8c8";
+}
+
+.cui-icon-keyboard-26:before {
+    content: "\e8c9";
+}
+
+.cui-icon-calendar:before {
+    content: "\e8bd";
+}
+
+.cui-icon-customer-service:before {
+    content: "\e8be";
+}
+
+.cui-icon-edit:before {
+    content: "\e8ca";
+}
+
+.cui-icon-scan:before {
+    content: "\e8bf";
+}
+
+.cui-icon-pay:before {
+    content: "\e8c0";
+}
+
+.cui-icon-image:before {
+    content: "\e610";
+}
+
+.cui-icon-image-error:before {
+    content: "\e612";
+}
+
+.cui-icon-warning-border:before {
+    content: "\e8b3";
+}
+
+.cui-icon-time:before {
+    content: "\e8b5";
+}
+
+.cui-icon-meh:before {
+    content: "\e8b6";
+}
+
+.cui-icon-cry:before {
+    content: "\e8b7";
+}
+
+.cui-icon-smile:before {
+    content: "\e8b8";
+}
+
+.cui-icon-refresh:before {
+    content: "\e8ad";
+}
+
+.cui-icon-plus-border:before {
+    content: "\e8ae";
+}
+
+.cui-icon-minus-border:before {
+    content: "\e8af";
+}
+
+.cui-icon-check-border:before {
+    content: "\e8b0";
+}
+
+.cui-icon-close-border:before {
+    content: "\e8b1";
+}
+
+.cui-icon-help-border:before {
+    content: "\e8b2";
+}
+
+.cui-icon-caret-bottom:before {
+    content: "\e797";
+}
+
+.cui-icon-caret-top:before {
+    content: "\e798";
+}
+
+.cui-icon-notification:before {
+    content: "\e808";
+}
+
+.cui-icon-notification-fill:before {
+    content: "\e807";
+}
+
+.cui-icon-arrow-bottom:before {
+    content: "\e661";
+}
+
+.cui-icon-arrow-top:before {
+    content: "\e6de";
+}
+
+.cui-icon-toast-warning:before {
+    content: "\e62b";
+}
+
+.cui-icon-toast-waiting:before {
+    content: "\e62a";
+}
+
+.cui-icon-toast-success:before {
+    content: "\e642";
+}
+
+.cui-icon-toast-error:before {
+    content: "\e644";
+}
+
+.cui-icon-arrow-left:before {
+    content: "\e7ed";
+}
+
+.cui-icon-arrow-right:before {
+    content: "\e806";
+}
+
+.cui-icon-plus:before {
+    content: "\e809";
+}
+
+.cui-icon-minus:before {
+    content: "\e80a";
+}
+
+.cui-icon-check:before {
+    content: "\e645";
+}
+
+.cui-icon-close:before {
+    content: "\e646";
+}
+
+.cui-icon-search:before {
+    content: "\e65c";
+}
+
+.cui-icon-exit:before {
+    content: "\e713";
+}
+
+.cui-icon-qrcode:before {
+    content: "\e643";
+}
+
+.cui-icon-home::before {
+    content: "\e8ff";
+}
+
+.cui-icon-order-received::before {
+    content: "\ec7d";
+}
+
+.cui-icon-order-paid::before {
+    content: "\ec7e";
+}
+
+.cui-icon-order-not-shipped::before {
+    content: "\ec7f";
+}
+
+.cui-icon-order-refund::before {
+    content: "\ec80";
+}
+
+.cui-icon-msg::before {
+    content: "\ec81";
+}

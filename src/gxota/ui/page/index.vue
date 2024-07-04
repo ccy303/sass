@@ -1,32 +1,28 @@
 <template>
-    <!-- Nav -->
-    <base-custom-nav
-        class="page-nav"
-        :navTitle="navTitleComputed"
-        :navTitleColor="navTitleColor"
-        :navTtitleAlign="navTtitleAlign"
-        :navBgColor="navBgColor"
-        :navBackText="navBackText"
-        :navBackIconColor="navBackIconColor"
-        :navBackTextColor="navBackTextColor"
-        v-if="widthNav"
-    />
+    <div class="cui-page" :class="[{ 'is-fullscreen': fullscreen }]" :style="{ style }">
+        <div v-if="widthNav" class="cui-page-nav">
+            <base-custom-nav
+                :navTitle="navTitleComputed"
+                :navTitleColor="navTitleColor"
+                :navTtitleAlign="navTtitleAlign"
+                :navBgColor="navBgColor"
+                :navBackText="navBackText"
+                :navBackIconColor="navBackIconColor"
+                :navBackTextColor="navBackTextColor"
+            />
+        </div>
 
-    <div class="cui-page" :class="[{ 'is-fullscreen': fullscreen }]" :style="styles">
-        <!-- 加载框 -->
         <base-loading-mask fullscreen :loading="loader.loading" :text="loader.text" :border="loader.border" />
 
-        <!-- 提示 -->
         <base-toast :ref="setRefs('toast')" />
 
-        <!-- 确认框 -->
         <base-confirm :ref="setRefs('confirm')" />
 
-        <!-- 内容插槽 -->
-        <slot></slot>
+        <div :style="{ padding: parseRpx(padding) }">
+            <slot></slot>
+        </div>
     </div>
 
-    <!-- 背景色 -->
     <div class="cui-page__bg" :style="{ background }"></div>
 </template>
 
@@ -132,16 +128,16 @@
                 return `${height - (safeAreaInsets?.bottom || 0)}px`;
             });
 
-            const styles = computed(() => {
-                const output = {
-                    padding: parseRpx(props.padding),
-                    height: height.value
-                };
-                if (props.widthNav) {
-                    output.paddingTop = parseRpx(Number(h.value) + Number(props.padding) / 2, "px");
-                }
-                return output;
-            });
+            // const styles = computed(() => {
+            //     const output = {
+            //         padding: parseRpx(props.padding),
+            //         height: height.value
+            //     };
+            //     // if (props.widthNav) {
+            //     //     output.paddingTop = parseRpx(Number(h.value) + Number(props.padding) / 2, "px");
+            //     // }
+            //     return output;
+            // });
 
             // 滚动事件
             proxy.$root.scrollTo = top => {
@@ -164,7 +160,7 @@
 
             return {
                 navHeight,
-                styles,
+                height,
                 refs,
                 setRefs,
                 loader,
@@ -202,11 +198,11 @@
         }
     }
 
-    .is-nav-fixed {
-        margin-top: v-bind(navHeight);
-    }
+    // .is-nav-fixed {
+    //     margin-top: v-bind(navHeight);
+    // }
 
-    .page-nav {
-        @apply fixed top-0 left-0 right-0 z-99;
+    .cui-page-nav {
+        @apply sticky top-0 z-999;
     }
 </style>

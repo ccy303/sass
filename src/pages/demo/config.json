@@ -6,6 +6,8 @@
     "tag": { "uiTitle": "Tag 标签" },
     "toast": { "uiTitle": "Toast 提示" },
     "loading": { "uiTitle": "Loading 加载" },
+    "sticky": { "uiTitle": "Sticky 吸顶" },
+    "readMore": { "uiTitle": "ReadMore 阅读更多" },
 
     "input": { "uiTitle": "Input 输入框" },
     "input-number": { "uiTitle": "InputNumber 计数器" },

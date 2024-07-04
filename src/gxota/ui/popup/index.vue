@@ -119,8 +119,12 @@
             // 顶部距离
             const paddingTop = computed(() => {
                 if (["left", "right", "top"].includes(props.direction)) {
-                    let height = statusBarHeight;
-                    ui.widthNav && (height += Number(h.value));
+                    let height = 0;
+                    if (ui.widthNav) {
+                        height += Number(h.value);
+                    } else {
+                        height += statusBarHeight;
+                    }
                     let [t] = parseRpx(props.padding).split(" ");
                     if (t == "0rpx") {
                         t = "0px";

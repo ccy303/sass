@@ -1,5 +1,4 @@
 import { isArray, isEmpty, isNumber } from "lodash-es";
-import { router } from "@/gxota/router";
 import { isString } from "lodash-es";
 
 export const getParent = (name, k1, k2) => {

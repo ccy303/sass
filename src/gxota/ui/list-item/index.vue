@@ -326,12 +326,12 @@
         }
 
         &__menu-left {
-            @apply h-100% absolute transition-left transition-duration-300;
+            @apply h-100% absolute transition-left transition-duration-300 flex items-center;
             transform: translateX(-100%);
         }
 
         &__menu-right {
-            @apply h-100% absolute right--0.5 transition-left transition-duration-300;
+            @apply h-100% absolute right--0.5 transition-left transition-duration-300 flex items-center;
             transform: translateX(100%);
         }
     }

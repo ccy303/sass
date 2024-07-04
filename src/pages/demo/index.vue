@@ -31,7 +31,9 @@
                 { label: "Icon 图标", path: "/pages/demo/icon" },
                 { label: "Tag 标签", path: "/pages/demo/tag" },
                 { label: "Toast 提示", path: "/pages/demo/toast" },
-                { label: "Loading 加载", path: "/pages/demo/loading" }
+                { label: "Loading 加载", path: "/pages/demo/loading" },
+                { label: "Sticky 吸顶", path: "/pages/demo/sticky" },
+                { label: "ReadMore 阅读更多", path: "/pages/demo/readMore" },
             ]
         },
         {

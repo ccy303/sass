@@ -125,7 +125,6 @@
                     if (t == "0rpx") {
                         t = "0px";
                     }
-                    console.log(height);
                     return `calc(${height}px + ${t})`;
                 } else {
                     return 1;

@@ -44,6 +44,7 @@
     "waterfall": { "uiTitle": "Waterfall 瀑布流", "style": { "enablePullDownRefresh": true } },
     "scroller": { "uiTitle": "Scroller 滚动区" },
     "skeleton": { "uiTitle": "Skeleton 骨架屏" },
+    "collapse": { "uiTitle": "Collapse 折叠面板" },
 
     "action-sheet": { "uiTitle": "ActionSheet 操作菜单" },
     "captcha": { "uiTitle": "Captcha 验证码" },

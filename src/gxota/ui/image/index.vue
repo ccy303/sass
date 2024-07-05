@@ -45,7 +45,7 @@
             // 图片地址
             src: String,
             // 图片裁剪、缩放的模式
-            mode: { type: String, default: "aspectFill" },
+            mode: { type: String, default: "scaleToFill" },
             // 图片大小
             size: { type: [String, Number, Array], default: "100%" },
             // 是否圆角

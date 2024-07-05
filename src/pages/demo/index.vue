@@ -77,7 +77,8 @@
                 { label: "Timeline 时间线", path: "/pages/demo/timeline" },
                 { label: "Waterfall 瀑布流", path: "/pages/demo/waterfall" },
                 { label: "Scroller 滚动条", path: "/pages/demo/scroller" },
-                { label: "Skeleton 骨架图", path: "/pages/demo/skeleton" }
+                { label: "Skeleton 骨架图", path: "/pages/demo/skeleton" },
+                { label: "Collapse 折叠面板", path: "/pages/demo/collapse" },
             ]
         },
         {

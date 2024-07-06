@@ -20,7 +20,7 @@
                 <base-icon name="arrow-bottom" :size="28" />
             </div>
         </div>
-        <div class="cui-collapse-item__wrap" :class="{ 'is--transition': showAnimation }" :style="{ height: isOpen ? 'auto' : 0 }">
+        <div class="cui-collapse-item__wrap" :class="{ 'is--transition': showAnimation }" :style="{ height: isOpen ? `${height}px` : 0 }">
             <div class="cui-collapse-item__wrap-content">
                 <slot></slot>
             </div>
@@ -70,22 +70,24 @@
                 isOpen.value = !isOpen.value;
             };
 
-            const getCollapse = (name = "uniCollapse") => {
-                let parent = this.$parent;
-                let parentName = parent.$options.name;
-                while (parentName !== name) {
-                    parent = parent.$parent;
-                    if (!parent) return false;
-                    parentName = parent.$options.name;
-                }
-                return parent;
+            const getHeight = () => {
+                uni.createSelectorQuery(proxy)
+                    .in(proxy)
+                    .select(".cui-collapse-item__wrap-content")
+                    .boundingClientRect(rect => {
+                        const { height: h } = rect;
+                        height.value = h;
+                    })
+                    .exec();
             };
 
             onMounted(() => {
+                console.log(props.title);
                 setChildInstance(elId.value, proxy);
+                getHeight();
             });
 
-            return { isOpen, elId, toggle };
+            return { isOpen, elId, height, toggle };
         }
     });
     /**

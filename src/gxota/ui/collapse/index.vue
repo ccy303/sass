@@ -13,23 +13,13 @@
             accordion: { type: [Boolean, String], default: false }
         },
         setup(props) {
-            console.log(1111111, getCurrentInstance());
+            console.log(1234, getCurrentInstance());
 
             const childInstance = reactive({});
 
             const setChildInstance = (key, ctx) => {
                 childInstance[key] = ctx;
             };
-
-            watch(
-                () => childInstance,
-                e => {
-                    console.log(1234567, e);
-                },
-                { deep: true }
-            );
-
-            console.log(childInstance);
 
             provide("COLLAPSE", {
                 setChildInstance

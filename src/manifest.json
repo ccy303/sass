@@ -1,6 +1,6 @@
 {
     "name": "LF-UI",
-    "appid": "wxb54f3f5f9075b357",
+    "appid": "wxdc647f47ce25d7e8",
     "description": "",
     "versionName": "1.0.0",
     "versionCode": "100",
@@ -51,7 +51,7 @@
     "quickapp": {},
     /* 小程序特有相关 */
     "mp-weixin": {
-        "appid": "wxb54f3f5f9075b357",
+        "appid": "wxdc647f47ce25d7e8",
         "setting": {
             "urlCheck": false
         },

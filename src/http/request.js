@@ -1,5 +1,3 @@
-import { useCommonStore } from "@/stores/common";
-import { storeToRefs } from "pinia";
 import { logRequest, logReponse } from "./logger";
 import { encryptBase64, encryptWithAes, generateAesKey, decryptWithAes, decryptBase64 } from "@/utils/crypto";
 import { encrypt, decrypt } from "@/utils/jsencrypt";
@@ -7,34 +5,21 @@ import { encrypt, decrypt } from "@/utils/jsencrypt";
 const request = async (options, errToast = true) => {
     const accessToken = uni.getStorageSync("accessToken");
 
-    const commonStore = useCommonStore();
-    const { location, cityInfo } = storeToRefs(commonStore);
+    const { tenant_id } = (await uni.getStorageSync("accountInfo")) || {};
 
     const config = { ...options };
 
-    // #ifndef H5
-    if (!location.value) {
-        await commonStore.getLocation();
-    }
-    if (!cityInfo.value) {
-        await commonStore.getCityInfo();
-    }
-    // #endif
-    
     const { isEncrypt } = config.headers || {};
 
     const headers = {
-        clientid: import.meta.env.VITE_CLIENT_ID,
-        Authorization: `Bearer ${accessToken}`,
-        tenantId: import.meta.env.VITE_TENANT_ID,
-        appId: import.meta.env.VITE_APP_ID,
-        lng: location.value?.longitude,
-        lat: location.value?.latitude,
-        city: encodeURIComponent(cityInfo.value?.city),
-        province: encodeURIComponent(cityInfo.value?.province),
-        district: encodeURIComponent(cityInfo.value?.district),
+        Authorization: "Basic c3dvcmQ6c3dvcmRfc2VjcmV0",
+        "Tenant-Id": tenant_id || "000000",
         ...config.header
     };
+
+    if (accessToken) {
+        headers["Blade-Auth"] = `Bearer ${accessToken}`;
+    }
 
     logRequest({ ...config, header: headers });
 

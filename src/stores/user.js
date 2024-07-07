@@ -1,5 +1,4 @@
 import { defineStore } from "pinia";
-import { getUserInfo as httpGetUserInfo } from "@/http/user";
 
 export const useUserStore = defineStore("userStore", () => {
     const user = ref(null);
@@ -23,17 +22,5 @@ export const useUserStore = defineStore("userStore", () => {
         }
     };
 
-    const getUserInfo = async () => {
-        return new Promise(async (resolve, reject) => {
-            try {
-                const accountInfo = await httpGetUserInfo();
-                setUser(accountInfo);
-                resolve(accountInfo);
-            } catch (err) {
-                reject(err);
-            }
-        });
-    };
-
-    return { user, setUser, token, setToken, getUserInfo };
+    return { user, setUser, token, setToken };
 });

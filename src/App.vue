@@ -1,6 +1,7 @@
 <script setup>
     import { onLaunch } from "@dcloudio/uni-app";
     import { useUserStore } from "@/stores/user";
+    import { login } from "@/http/user";
 
     const userStore = useUserStore();
 
@@ -8,14 +9,16 @@
     uni.showShareMenu({});
     // #endif
 
-    onLaunch(async () => {
-        userStore.setUser(null);
-        try {
-            await userStore.getUserInfo();
-        } catch (err) {
-            console.log(err);
+    (async () => {
+        const { code } = await uni.login();
+        if (!code) {
+            return;
         }
-    });
+        const { access_token, ...other } = await login(code);
+
+        userStore.setToken(access_token);
+        userStore.setUser(other);
+    })();
 </script>
 
 <style lang="scss">

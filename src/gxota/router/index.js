@@ -7,7 +7,7 @@ const routes = [...ctx.pages];
 if (ctx.subPackages) {
     ctx.subPackages.forEach(a => {
         a.pages.forEach(b => {
-            routes.push({ ...b, path: a.root + "/" + b.path });
+            routes.push({ ...a, ...b, path: a.root + "/" + b.path });
         });
     });
 }

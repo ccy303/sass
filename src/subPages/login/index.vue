@@ -27,7 +27,7 @@
 
 <script setup>
     import { common } from "@/imgImport";
-    import { login, bingPhone } from "@/http/user";
+    // import { login, bingPhone } from "@/http/user";
     import { onLoad } from "@dcloudio/uni-app";
     import { useUserStore } from "@/stores/user";
 
@@ -47,33 +47,33 @@
     });
 
     const loginFn = async () => {
-        const { code: loginCode } = await uni.login({ provider: "weixin" });
-        // 微信登录
-        const { access_token } = await login(loginCode);
-        userStore.setToken(access_token);
-        const userInfo = await userStore.getUserInfo();
+        // const { code: loginCode } = await uni.login({ provider: "weixin" });
+        // // 微信登录
+        // const { access_token } = await login(loginCode);
+        // userStore.setToken(access_token);
+        // const userInfo = await userStore.getUserInfo();
 
-        // 绑定手机;
-        if (!userInfo.phone) {
-            popup.value.open("center");
-        } else {
-            navigateFun();
-        }
+        // // 绑定手机;
+        // if (!userInfo.phone) {
+        //     popup.value.open("center");
+        // } else {
+        //     navigateFun();
+        // }
     };
 
     const bindPhone = async ({ detail }) => {
-        const { errMsg, code } = detail;
-        if (errMsg !== "getPhoneNumber:ok") {
-            return cancel();
-        }
-        popup.value.close();
-        try {
-            await bingPhone(code);
-            await userStore.getUserInfo();
-            navigateFun();
-        } catch (err) {
-            setTimeout(() => cancel(), 1000);
-        }
+        // const { errMsg, code } = detail;
+        // if (errMsg !== "getPhoneNumber:ok") {
+        //     return cancel();
+        // }
+        // popup.value.close();
+        // try {
+        //     await bingPhone(code);
+        //     await userStore.getUserInfo();
+        //     navigateFun();
+        // } catch (err) {
+        //     setTimeout(() => cancel(), 1000);
+        // }
     };
 
     const navigateFun = () => {

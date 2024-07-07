@@ -12,7 +12,10 @@
         { "path": "pages/tour/index", "style": {} },
         { "path": "pages/mine/index", "style": {} }
     ],
-    "subPackages": [{ "root": "subPages/login", "pages": [{ "path": "index" }] }],
+    "subPackages": [
+        { "root": "subPages/login", "pages": [{ "path": "index" }] },
+        { "root": "subPages/stall", "pages": [{ "path": "index" }], "uiTitle": "我的摊位" }
+    ],
     "globalStyle": {
         "navigationStyle": "custom",
         "navigationBarTextStyle": "white",

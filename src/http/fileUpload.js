@@ -7,7 +7,6 @@ export const fileUpload = (url, name, filePath) => {
             name,
             header: {
                 Authorization: "Bearer " + uni.getStorageSync("accessToken"),
-                clientId: import.meta.env.VITE_CLIENT_ID
             },
             success: res => {
                 uni.hideLoading();

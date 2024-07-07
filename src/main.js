@@ -6,8 +6,6 @@ import "virtual:uno.css";
 
 import { ctx } from "virtual:ctx";
 
-console.log(ctx);
-
 export const createApp = () => {
     const app = createSSRApp(App);
 

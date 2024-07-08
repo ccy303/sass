@@ -1,140 +1,88 @@
 <template>
-    <view class="uni-cursor-point">
+    <view>
         <view
             v-if="popMenu && (leftBottom || rightBottom || leftTop || rightTop) && content.length > 0"
             :class="{
-                'uni-fab--leftBottom': leftBottom,
-                'uni-fab--rightBottom': rightBottom,
-                'uni-fab--leftTop': leftTop,
-                'uni-fab--rightTop': rightTop
+                'cui-fab--leftBottom': leftBottom,
+                'cui-fab--rightBottom': rightBottom,
+                'cui-fab--leftTop': leftTop,
+                'cui-fab--rightTop': rightTop
             }"
-            class="uni-fab"
+            class="cui-fab"
             :style="nvueBottom"
         >
             <view
                 :class="{
-                    'uni-fab__content--left': horizontal === 'left',
-                    'uni-fab__content--right': horizontal === 'right',
-                    'uni-fab__content--flexDirection': direction === 'vertical',
-                    'uni-fab__content--flexDirectionStart': flexDirectionStart,
-                    'uni-fab__content--flexDirectionEnd': flexDirectionEnd,
-                    'uni-fab__content--other-platform': !isAndroidNvue
+                    'cui-fab__content--left': horizontal === 'left',
+                    'cui-fab__content--right': horizontal === 'right',
+                    'cui-fab__content--flexDirection': direction === 'vertical',
+                    'cui-fab__content--flexDirectionStart': flexDirectionStart,
+                    'cui-fab__content--flexDirectionEnd': flexDirectionEnd
                 }"
                 :style="{ width: boxWidth, height: boxHeight, backgroundColor: styles.backgroundColor }"
-                class="uni-fab__content"
+                class="cui-fab__content"
                 elevation="5"
             >
-                <view v-if="flexDirectionStart || horizontalLeft" class="uni-fab__item uni-fab__item--first" />
+                <view v-if="flexDirectionStart || horizontalLeft" class="cui-fab__item cui-fab__item--first" />
                 <view
                     v-for="(item, index) in content"
                     :key="index"
-                    :class="{ 'uni-fab__item--active': isShow }"
-                    class="uni-fab__item"
+                    :class="{ 'cui-fab__item--active': isShow }"
+                    class="cui-fab__item"
                     @click="_onItemClick(index, item)"
                 >
-                    <image :src="item.active ? item.selectedIconPath : item.iconPath" class="uni-fab__item-image" mode="aspectFit" />
-                    <text class="uni-fab__item-text" :style="{ color: item.active ? styles.selectedColor : styles.color }">{{ item.text }}</text>
+                    <image :src="item.active ? item.selectedIconPath : item.iconPath" class="cui-fab__item-image" mode="aspectFit" />
+                    <text class="cui-fab__item-text" :style="{ color: item.active ? styles.selectedColor : styles.color }">{{ item.text }}</text>
                 </view>
-                <view v-if="flexDirectionEnd || horizontalRight" class="uni-fab__item uni-fab__item--first" />
+                <view v-if="flexDirectionEnd || horizontalRight" class="cui-fab__item uni-fab__item--first" />
             </view>
         </view>
         <view
             :class="{
-                'uni-fab__circle--leftBottom': leftBottom,
-                'uni-fab__circle--rightBottom': rightBottom,
-                'uni-fab__circle--leftTop': leftTop,
-                'uni-fab__circle--rightTop': rightTop,
-                'uni-fab__content--other-platform': !isAndroidNvue
+                'cui-fab__circle--leftBottom': leftBottom,
+                'cui-fab__circle--rightBottom': rightBottom,
+                'cui-fab__circle--leftTop': leftTop,
+                'cui-fab__circle--rightTop': rightTop
             }"
-            class="uni-fab__circle uni-fab__plus"
+            class="cui-fab__circle cui-fab__plus"
             :style="{ 'background-color': styles.buttonColor, bottom: nvueBottom }"
             @click="_onClick"
         >
-            <uni-icons
+            <base-icon
                 class="fab-circle-icon"
-                :type="styles.icon"
+                :name="styles.icon"
                 :color="styles.iconColor"
-                size="32"
-                :class="{ 'uni-fab__plus--active': isShow && content.length > 0 }"
-            ></uni-icons>
+                :size="50"
+                :class="{ 'cui-fab__plus--active': isShow && content.length > 0 }"
+            />
         </view>
     </view>
 </template>
 
 <script>
-    let platform = "other";
-    // #ifdef APP-NVUE
-    platform = uni.getSystemInfoSync().platform;
-    // #endif
-
-    /**
-     * Fab 悬浮按钮
-     * @description 点击可展开一个图形按钮菜单
-     * @tutorial https://ext.dcloud.net.cn/plugin?id=144
-     * @property {Object} pattern 可选样式配置项
-     * @property {Object} horizontal = [left | right] 水平对齐方式
-     * 	@value left 左对齐
-     * 	@value right 右对齐
-     * @property {Object} vertical = [bottom | top] 垂直对齐方式
-     * 	@value bottom 下对齐
-     * 	@value top 上对齐
-     * @property {Object} direction = [horizontal | vertical] 展开菜单显示方式
-     * 	@value horizontal 水平显示
-     * 	@value vertical 垂直显示
-     * @property {Array} content 展开菜单内容配置项
-     * @property {Boolean} popMenu 是否使用弹出菜单
-     * @event {Function} trigger 展开菜单点击事件，返回点击信息
-     * @event {Function} fabClick 悬浮按钮点击事件
-     */
     export default {
-        name: "UniFab",
+        name: "BaseFab",
         emits: ["fabClick", "trigger"],
         props: {
-            pattern: {
-                type: Object,
-                default() {
-                    return {};
-                }
-            },
-            horizontal: {
-                type: String,
-                default: "left"
-            },
-            vertical: {
-                type: String,
-                default: "bottom"
-            },
-            direction: {
-                type: String,
-                default: "horizontal"
-            },
-            content: {
-                type: Array,
-                default() {
-                    return [];
-                }
-            },
-            show: {
-                type: Boolean,
-                default: false
-            },
-            popMenu: {
-                type: Boolean,
-                default: true
-            }
+            pattern: { type: Object, default: () => ({}) },
+            horizontal: { type: String, default: "left" },
+            vertical: { type: String, default: "bottom" },
+            direction: { type: String, default: "horizontal" },
+            content: { type: Array, default: () => [] },
+            show: { type: Boolean, default: false },
+            popMenu: { type: Boolean, default: true }
         },
         data() {
             return {
                 fabShow: false,
                 isShow: false,
-                isAndroidNvue: platform === "android",
                 styles: {
                     color: "#3c3e49",
                     selectedColor: "#007AFF",
                     backgroundColor: "#fff",
                     buttonColor: "#007AFF",
                     iconColor: "#fff",
-                    icon: "plusempty"
+                    icon: "plus"
                 }
             };
         },
@@ -182,13 +130,7 @@
             },
             // 计算 nvue bottom
             nvueBottom() {
-                const safeBottom = uni.getSystemInfoSync().windowBottom;
-                // #ifdef APP-NVUE
-                return 30 + safeBottom;
-                // #endif
-                // #ifndef APP-NVUE
                 return 30;
-                // #endif
             }
         },
         watch: {
@@ -251,7 +193,7 @@
     };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
     $uni-shadow-base: 0 1px 5px 2px
         rgba(
             $color: #000000,
@@ -259,255 +201,120 @@
         ) !default;
 
     .uni-fab {
-        position: fixed;
-        /* #ifndef APP-NVUE */
-        display: flex;
-        /* #endif */
-        justify-content: center;
-        align-items: center;
-        z-index: 10;
-        border-radius: 45px;
-        box-shadow: $uni-shadow-base;
+        @apply fixed flex-center z-10 border-rd-45;
     }
 
-    .uni-cursor-point {
-        /* #ifdef H5 */
-        cursor: pointer;
-        /* #endif */
+    .cui-fab--active {
+        @apply opacity-100;
     }
 
-    .uni-fab--active {
-        opacity: 1;
+    .cui-fab--leftBottom {
+        @apply left-15 bottom-30;
     }
 
-    .uni-fab--leftBottom {
-        left: 15px;
-        bottom: 30px;
-        /* #ifdef H5 */
-        left: calc(15px + var(--window-left));
-        bottom: calc(30px + var(--window-bottom));
-        /* #endif */
-        // padding: 10px;
+    .cui-fab--leftTop {
+        @apply left-15 top-30;
     }
 
-    .uni-fab--leftTop {
-        left: 15px;
-        top: 30px;
-        /* #ifdef H5 */
-        left: calc(15px + var(--window-left));
-        top: calc(30px + var(--window-top));
-        /* #endif */
-        // padding: 10px;
+    .cui-fab--rightBottom {
+        @apply right-15 bottom-30;
     }
 
-    .uni-fab--rightBottom {
-        right: 15px;
-        bottom: 30px;
-        /* #ifdef H5 */
-        right: calc(15px + var(--window-right));
-        bottom: calc(30px + var(--window-bottom));
-        /* #endif */
-        // padding: 10px;
+    .cui-fab--rightTop {
+        @apply right-15 top-30;
     }
 
-    .uni-fab--rightTop {
-        right: 15px;
-        top: 30px;
-        /* #ifdef H5 */
-        right: calc(15px + var(--window-right));
-        top: calc(30px + var(--window-top));
-        /* #endif */
-        // padding: 10px;
+    .cui-fab__circle {
+        @apply fixed flex-center size-55 bg-#3c3e49 border-rd-45 z-11;
     }
 
-    .uni-fab__circle {
-        position: fixed;
-        /* #ifndef APP-NVUE */
-        display: flex;
-        /* #endif */
-        justify-content: center;
-        align-items: center;
-        width: 55px;
-        height: 55px;
-        background-color: #3c3e49;
-        border-radius: 45px;
-        z-index: 11;
-        // box-shadow: $uni-shadow-base;
+    .cui-fab__circle--leftBottom {
+        @apply left-15 bottom-30;
     }
 
-    .uni-fab__circle--leftBottom {
-        left: 15px;
-        bottom: 30px;
-        /* #ifdef H5 */
-        left: calc(15px + var(--window-left));
-        bottom: calc(30px + var(--window-bottom));
-        /* #endif */
+    .cui-fab__circle--leftTop {
+        @apply left-15 top-30;
     }
 
-    .uni-fab__circle--leftTop {
-        left: 15px;
-        top: 30px;
-        /* #ifdef H5 */
-        left: calc(15px + var(--window-left));
-        top: calc(30px + var(--window-top));
-        /* #endif */
+    .cui-fab__circle--rightBottom {
+        @apply right-15 bottom-30;
     }
 
-    .uni-fab__circle--rightBottom {
-        right: 15px;
-        bottom: 30px;
-        /* #ifdef H5 */
-        right: calc(15px + var(--window-right));
-        bottom: calc(30px + var(--window-bottom));
-        /* #endif */
+    .cui-fab__circle--rightTop {
+        @apply right-15 top-30;
     }
 
-    .uni-fab__circle--rightTop {
-        right: 15px;
-        top: 30px;
-        /* #ifdef H5 */
-        right: calc(15px + var(--window-right));
-        top: calc(30px + var(--window-top));
-        /* #endif */
+    .cui-fab__circle--left {
+        @apply left-0;
     }
 
-    .uni-fab__circle--left {
-        left: 0;
+    .cui-fab__circle--right {
+        @apply right-0;
     }
 
-    .uni-fab__circle--right {
-        right: 0;
+    .cui-fab__circle--top {
+        @apply top-0;
     }
 
-    .uni-fab__circle--top {
-        top: 0;
+    .cui-fab__circle--bottom {
+        @apply bottom-0;
     }
 
-    .uni-fab__circle--bottom {
-        bottom: 0;
+    .cui-fab__plus {
+        @apply font-bold;
     }
-
-    .uni-fab__plus {
-        font-weight: bold;
-    }
-
-    // .fab-circle-v {
-    // 	position: absolute;
-    // 	width: 2px;
-    // 	height: 24px;
-    // 	left: 0;
-    // 	top: 0;
-    // 	right: 0;
-    // 	bottom: 0;
-    // 	/* #ifndef APP-NVUE */
-    // 	margin: auto;
-    // 	/* #endif */
-    // 	background-color: white;
-    // 	transform: rotate(0deg);
-    // 	transition: transform 0.3s;
-    // }
-
-    // .fab-circle-h {
-    // 	position: absolute;
-    // 	width: 24px;
-    // 	height: 2px;
-    // 	left: 0;
-    // 	top: 0;
-    // 	right: 0;
-    // 	bottom: 0;
-    // 	/* #ifndef APP-NVUE */
-    // 	margin: auto;
-    // 	/* #endif */
-    // 	background-color: white;
-    // 	transform: rotate(0deg);
-    // 	transition: transform 0.3s;
-    // }
 
     .fab-circle-icon {
-        transform: rotate(0deg);
-        transition: transform 0.3s;
-        font-weight: 200;
+        @apply rotate-0 transition-transform-300 font-200;
     }
 
-    .uni-fab__plus--active {
+    .cui-fab__plus--active {
         transform: rotate(135deg);
     }
 
-    .uni-fab__content {
-        /* #ifndef APP-NVUE */
-        box-sizing: border-box;
-        display: flex;
-        /* #endif */
-        flex-direction: row;
-        border-radius: 55px;
-        overflow: hidden;
+    .cui-fab__content {
+        @apply box-border flex flex-row border-rd-55 overflow-hidden w-55 border-#fff border-1 border-solid;
         transition-property: width, height;
         transition-duration: 0.2s;
-        width: 55px;
-        border-color: #dddddd;
-        border-width: 1rpx;
-        border-style: solid;
     }
 
-    .uni-fab__content--other-platform {
-        border-width: 0px;
-        box-shadow: $uni-shadow-base;
+    .cui-fab__content--left {
+        @apply justify-start;
     }
 
-    .uni-fab__content--left {
-        justify-content: flex-start;
+    .cui-fab__content--right {
+        @apply justify-end;
     }
 
-    .uni-fab__content--right {
-        justify-content: flex-end;
+    .cui-fab__content--flexDirection {
+        @apply flex-col justify-end;
     }
 
-    .uni-fab__content--flexDirection {
-        flex-direction: column;
-        justify-content: flex-end;
+    .cui-fab__content--flexDirectionStart {
+        @apply flex-col justify-start;
     }
 
-    .uni-fab__content--flexDirectionStart {
-        flex-direction: column;
-        justify-content: flex-start;
+    .cui-fab__content--flexDirectionEnd {
+        @apply flex-col justify-end;
     }
 
-    .uni-fab__content--flexDirectionEnd {
-        flex-direction: column;
-        justify-content: flex-end;
+    .cui-fab__item {
+        @apply flex flex-col items-center justify-center size-55 opacity-0 transition-opacity-200;
     }
 
-    .uni-fab__item {
-        /* #ifndef APP-NVUE */
-        display: flex;
-        /* #endif */
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        width: 55px;
-        height: 55px;
-        opacity: 0;
-        transition: opacity 0.2s;
+    .cui-fab__item--active {
+        @apply opacity-100;
     }
 
-    .uni-fab__item--active {
-        opacity: 1;
+    .cui-fab__item-image {
+        @apply size-20 mb-4;
     }
 
-    .uni-fab__item-image {
-        width: 20px;
-        height: 20px;
-        margin-bottom: 4px;
+    .cui-fab__item-text {
+        @apply color-#fff font-size-12 line-height-12 mt-2;
     }
 
-    .uni-fab__item-text {
-        color: #ffffff;
-        font-size: 12px;
-        line-height: 12px;
-        margin-top: 2px;
-    }
-
-    .uni-fab__item--first {
-        width: 55px;
+    .cui-fab__item--first {
+        @apply w-55;
     }
 </style>

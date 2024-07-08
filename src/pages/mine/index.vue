@@ -13,7 +13,7 @@
             <base-card label="我的功能">
                 <base-grid :column="4" :border="false">
                     <base-grid-item>
-                        <navigator class="flex flex-col items-center" url="/subPages/stall/index" open-type="navigate">
+                        <navigator class="flex flex-col items-center" url="/subPages/stall/index">
                             <base-image :size="100" :src="gdfw" />
                             <base-text>我的摊位</base-text>
                         </navigator>

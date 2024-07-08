@@ -14,7 +14,18 @@
     ],
     "subPackages": [
         { "root": "subPages/login", "pages": [{ "path": "index" }] },
-        { "root": "subPages/stall", "pages": [{ "path": "index" }], "uiTitle": "我的摊位" }
+        {
+            "root": "subPages/stall",
+            "pages": [{ "path": "index", "uiTitle": "我的摊位" }, { "path": "detail" }]
+        },
+        {
+            "root": "subPages/goods",
+            "pages": [
+                { "path": "index", "uiTitle": "我的商品" },
+                { "path": "categorize", "uiTitle": "分类管理" },
+                { "path": "good", "uiTitle": "商品管理" }
+            ]
+        }
     ],
     "globalStyle": {
         "navigationStyle": "custom",

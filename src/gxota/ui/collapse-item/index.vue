@@ -1,5 +1,5 @@
 <template>
-    <div class="cui-collapse-item" :id="elId">
+    <div class="cui-collapse-item">
         <div @click="toggle" class="cui-collapse-item__title cui-collapse-item-border" :class="{ 'is-disabled': disabled }">
             <div class="cui-collapse-item__title-wrap">
                 <slot name="title">
@@ -41,8 +41,6 @@
             disabled: { type: Boolean, default: false },
             // 是否显示动画
             showAnimation: { type: Boolean, default: true },
-            // 是否展开
-            open: { type: Boolean, default: false },
             // 缩略图
             thumb: { type: String, default: "" },
             // 标题分隔线显示类型
@@ -55,23 +53,23 @@
         setup(props) {
             const { proxy } = getCurrentInstance();
 
-            const { setChildInstance } = inject("COLLAPSE");
+            const { setChildInstance, setValue, setChange } = inject("COLLAPSE");
 
             const isOpen = ref(false);
-            const isheight = ref(null);
             const height = ref(0);
             const elId = ref(`cui_${uuid()}`);
-            const nameSync = ref(0);
 
             const toggle = () => {
-                if (props.disabled) {
-                    return;
-                }
-                isOpen.value = !isOpen.value;
+                if (props.disabled) return;
+
+                setValue({
+                    name: props.name || elId.value,
+                    value: isOpen.value
+                });
             };
 
-            const getHeight = () => {
-                uni.createSelectorQuery(proxy)
+            const getContentHeight = () => {
+                uni.createSelectorQuery()
                     .in(proxy)
                     .select(".cui-collapse-item__wrap-content")
                     .boundingClientRect(rect => {
@@ -82,128 +80,19 @@
             };
 
             onMounted(() => {
-                console.log(props.title);
-                setChildInstance(elId.value, proxy);
-                getHeight();
+                setChildInstance?.(props.name || elId.value, { proxy, name: props.name });
+                getContentHeight();
+                nextTick(() => {
+                    watch(
+                        () => isOpen.value,
+                        val => setChange?.(props.name, val)
+                    );
+                });
             });
 
-            return { isOpen, elId, height, toggle };
+            return { isOpen, elId, height, toggle, getContentHeight };
         }
     });
-    /**
-     * CollapseItem 折叠面板子组件
-     * @description 折叠面板子组件
-     * @property {String} title 标题文字
-     * @property {String} thumb 标题左侧缩略图
-     * @property {String} name 唯一标志符
-     * @property {Boolean} open = [true|false] 是否展开组件
-     * @property {Boolean} titleBorder = [true|false] 是否显示标题分隔线
-     * @property {String} border
-     * @property {Boolean} disabled = [true|false] 是否展开面板
-     * @property {Boolean} showAnimation = [true|false] 开启动画
-     * @property {Boolean} showArrow = [true|false]
-     */
-    // export default {
-    //     name: "BaseCollapseItem",
-    //     props: {
-    //     },
-    //     data() {
-    //         // TODO 随机生生元素ID，解决百度小程序获取同一个元素位置信息的bug
-    //         const elId = `Uni_${Math.ceil(Math.random() * 10e5).toString(36)}`;
-    //         return {
-    //             isOpen: false,
-    //             isheight: null,
-    //             height: 0,
-    //             elId,
-    //             nameSync: 0
-    //         };
-    //     },
-    //     watch: {
-    //         open(val) {
-    //             this.isOpen = val;
-    //             this.onClick(val, "init");
-    //         }
-    //     },
-    //     updated(e) {
-    //         this.$nextTick(() => {
-    //             this.init(true);
-    //         });
-    //     },
-    //     created() {
-    //         this.collapse = this.getCollapse();
-    //         this.oldHeight = 0;
-    //         this.onClick(this.open, "init");
-    //     },
-    //     unmounted() {
-    //         this.__isUnmounted = true;
-    //         this.uninstall();
-    //     },
-    //     mounted() {
-    //         if (!this.collapse) return;
-    //         if (this.name !== "") {
-    //             this.nameSync = this.name;
-    //         } else {
-    //             this.nameSync = this.collapse.childrens.length + "";
-    //         }
-    //         if (this.collapse.names.indexOf(this.nameSync) === -1) {
-    //             this.collapse.names.push(this.nameSync);
-    //         } else {
-    //             console.warn(`name 值 ${this.nameSync} 重复`);
-    //         }
-    //         if (this.collapse.childrens.indexOf(this) === -1) {
-    //             this.collapse.childrens.push(this);
-    //         }
-    //         this.init();
-    //     },
-    //     methods: {
-    //         init(type) {
-    //             this.getCollapseHeight(type);
-    //         },
-    //         uninstall() {
-    //             if (this.collapse) {
-    //                 this.collapse.childrens.forEach((item, index) => {
-    //                     if (item === this) {
-    //                         this.collapse.childrens.splice(index, 1);
-    //                     }
-    //                 });
-    //                 this.collapse.names.forEach((item, index) => {
-    //                     if (item === this.nameSync) {
-    //                         this.collapse.names.splice(index, 1);
-    //                     }
-    //                 });
-    //             }
-    //         },
-    //         onClick(isOpen, type) {
-    //             if (this.disabled) return;
-    //             this.isOpen = isOpen;
-    //             if (this.isOpen && this.collapse) {
-    //                 this.collapse.setAccordion(this);
-    //             }
-    //             if (type !== "init") {
-    //                 this.collapse.onChange(isOpen, this);
-    //             }
-    //         },
-    //         getCollapseHeight(type, index = 0) {
-    //             const views = uni.createSelectorQuery().in(this);
-    //             views
-    //                 .select(`#${this.elId}`)
-    //                 .fields({ size: true }, data => {
-    //                     // TODO 百度中可能获取不到节点信息 ，需要循环获取
-    //                     if (index >= 10) return;
-    //                     if (!data) {
-    //                         index++;
-    //                         this.getCollapseHeight(false, index);
-    //                         return;
-    //                     }
-    //                     this.height = data.height;
-    //                     this.isheight = true;
-    //                     if (type) return;
-    //                     this.onClick(this.isOpen, "init");
-    //                 })
-    //                 .exec();
-    //         },
-    //    }
-    // };
 </script>
 
 <style lang="scss" scoped>

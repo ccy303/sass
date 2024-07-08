@@ -1,11 +1,19 @@
 <template>
     <base-page padding="0">
-        <div class="flex-center flex-col w-100% mt-100" v-if="user?.tenant_id == '000000'">
+        <!-- <div class="flex-center flex-col w-100% mt-100" v-if="user?.tenant_id == '000000'"> -->
+        <div class="flex-center flex-col w-100% mt-100">
             <div>
                 <base-text>您还没有开设摊位，您可以</base-text>
             </div>
             <div class="mt-15">
-                <base-button type="primary" size="default" @tap="openStall">开设摊位</base-button>
+                <navigator url="/subPages/stall/detail">
+                    <base-button type="primary" size="default">开设摊位</base-button>
+                </navigator>
+            </div>
+            <div class="mt-15">
+                <navigator url="/subPages/goods/index">
+                    <base-button type="primary" size="default">商品管理</base-button>
+                </navigator>
             </div>
         </div>
     </base-page>
@@ -28,13 +36,8 @@
     watch(
         () => user,
         async val => {
-            if (val.value?.tenant_id) {
-                const data = await list();
-                console.log(data);
-            }
+            val.value?.tenant_id && getUserStallList();
         },
         { immediate: true, deep: true }
     );
-
-    const openStall = () => {};
 </script>

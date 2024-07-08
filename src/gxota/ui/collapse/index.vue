@@ -6,13 +6,14 @@
 <script>
     export default defineComponent({
         name: "BaseCollapse",
-        emits: ["change", "update:modelValue"],
+        emits: ["update:modelValue"],
         props: {
             modelValue: { type: [Array], default: () => [] },
             // 是否开启手风琴效果
             accordion: { type: [Boolean, String], default: false }
         },
         setup(props, { emit }) {
+            let localValue = [];
             const childInstance = reactive({});
 
             const setChildInstance = (key, ctx) => {
@@ -23,6 +24,7 @@
                 props.modelValue?.map(item => {
                     childInstance[item] && childInstance[item].proxy && (childInstance[item].proxy.isOpen = true);
                 });
+                localValue = [...props.modelValue];
             });
 
             const setValue = ctx => {
@@ -36,25 +38,15 @@
             };
 
             const setChange = (name, value) => {
-                if (!name) return;
+                if (value && !localValue.includes(name)) {
+                    localValue.push(name);
+                }
+                if (!value && localValue.includes(name)) {
+                    const index = localValue.indexOf(name);
+                    localValue.splice(index, 1);
+                }
 
-                const arr = [...props.modelValue];
-                const data = arr.reduce(result => {
-                    if (value && !result.includes(name)) {
-                        result.push(name);
-                        return result;
-                    }
-
-                    if (!value && result.includes(name)) {
-                        const index = result.indexOf(name);
-                        result.splice(index, 1);
-                        return result;
-                    }
-
-                    return result;
-                }, arr);
-
-                emit("update:modelValue", data);
+                emit("update:modelValue", localValue);
             };
 
             provide("COLLAPSE", {

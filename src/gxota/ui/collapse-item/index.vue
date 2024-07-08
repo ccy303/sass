@@ -82,10 +82,12 @@
             onMounted(() => {
                 setChildInstance?.(props.name || elId.value, { proxy, name: props.name });
                 getContentHeight();
-                watch(
-                    () => isOpen.value,
-                    val => setChange?.(props.name, val)
-                );
+                nextTick(() => {
+                    watch(
+                        () => isOpen.value,
+                        val => setChange?.(props.name, val)
+                    );
+                });
             });
 
             return { isOpen, elId, height, toggle, getContentHeight };

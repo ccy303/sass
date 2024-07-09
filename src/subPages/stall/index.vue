@@ -11,7 +11,16 @@
             </div>
         </div>
         <div>
-            <base-card label="阿诗丹顿"> </base-card>
+            <base-card>
+                <base-list>
+                    <base-list-item label="向左滑动" swipe="right">
+                        <template #menu>
+                            <base-button type="primary">置顶</base-button>
+                            <base-button type="error">删除</base-button>
+                        </template>
+                    </base-list-item>
+                </base-list>
+            </base-card>
         </div>
     </base-page>
 </template>

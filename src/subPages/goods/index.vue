@@ -2,6 +2,8 @@
     <base-page padding="0">
         <base-tabs v-model="active" :list="list"></base-tabs>
     </base-page>
+
+    <base-fab />
 </template>
 
 <script setup>

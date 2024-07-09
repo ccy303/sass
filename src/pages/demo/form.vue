@@ -86,8 +86,7 @@
     const rules = reactive({
         name: { required: true, message: "活动名称不能为空" },
         type: { required: true, message: "活动类型不能为空" },
-        date: { required: true, message: "活动时间不能为空" },
-        cover: { required: true, message: "活动封面不能为空" }
+        date: { required: true, message: "活动时间不能为空" }
     });
 
     const options = reactive({
@@ -110,17 +109,14 @@
 
     const loading = ref(false);
 
-    const submit = () => {
-        Form.value?.validate(valid => {
-            if (valid) {
-                loading.value = true;
-                console.log(form);
-                setTimeout(() => {
-                    ui.showToast("提交成功");
-                    loading.value = false;
-                }, 1500);
-            }
-        });
+    const submit = async () => {
+        await Form.value?.validate();
+        loading.value = true;
+        console.log(form);
+        setTimeout(() => {
+            ui.showToast("提交成功");
+            loading.value = false;
+        }, 1500);
     };
 
     // function reset() {

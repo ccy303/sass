@@ -3,7 +3,18 @@
         <base-tabs v-model="active" :list="list"></base-tabs>
     </base-page>
 
-    <base-fab />
+    <base-fab>
+        <div class="actions">
+            <navigator class="actions-item" url="/subPages/goods/categorize">
+                <base-icon :size="40" name="app" />
+                <base-text>分类</base-text>
+            </navigator>
+            <navigator class="actions-item" url="/subPages/goods/good">
+                <base-icon :size="40" name="pay" />
+                <base-text>商品</base-text>
+            </navigator>
+        </div>
+    </base-fab>
 </template>
 
 <script setup>
@@ -20,3 +31,12 @@
 
     const active = ref(1);
 </script>
+
+<style lang="scss" scope>
+    .actions {
+        @apply flex;
+        &-item {
+            @apply flex-center flex-col w-55 px-5;
+        }
+    }
+</style>

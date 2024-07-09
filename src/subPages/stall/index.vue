@@ -1,7 +1,6 @@
 <template>
-    <base-page padding="0">
-        <!-- <div class="flex-center flex-col w-100% mt-100" v-if="user?.tenant_id == '000000'"> -->
-        <div class="flex-center flex-col w-100% mt-100">
+    <base-page :padding="20">
+        <div class="flex-center flex-col w-100% mt-100" v-if="user?.tenant_id == '000000'">
             <div>
                 <base-text>您还没有开设摊位，您可以</base-text>
             </div>
@@ -10,11 +9,9 @@
                     <base-button type="primary" size="default">开设摊位</base-button>
                 </navigator>
             </div>
-            <div class="mt-15">
-                <navigator url="/subPages/goods/index">
-                    <base-button type="primary" size="default">商品管理</base-button>
-                </navigator>
-            </div>
+        </div>
+        <div>
+            <base-card label="阿诗丹顿"> </base-card>
         </div>
     </base-page>
 </template>
@@ -25,8 +22,6 @@
     import { list } from "@/http/stall";
 
     const user = storeToRefs(useUserStore()).user;
-
-    console.log(JSON.stringify(user));
 
     const getUserStallList = async () => {
         const data = await list();

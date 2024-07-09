@@ -128,34 +128,19 @@
                 return `${height - (safeAreaInsets?.bottom || 0)}px`;
             });
 
-            // const styles = computed(() => {
-            //     const output = {
-            //         padding: parseRpx(props.padding),
-            //         height: height.value
-            //     };
-            //     // if (props.widthNav) {
-            //     //     output.paddingTop = parseRpx(Number(h.value) + Number(props.padding) / 2, "px");
-            //     // }
-            //     return output;
-            // });
-
             // 滚动事件
             proxy.$root.scrollTo = top => {
-                // 减去间距
-                if (props.padding) {
-                    const [t] = parseRpx(props.padding).split(" ");
-                    top -= parseInt(t);
+                if (props.widthNav) {
+                    if (Number(h.value) == top) {
+                        return;
+                    }
+                    top = top - Number(h.value);
                 }
-                uni.createSelectorQuery()
-                    .in(proxy)
-                    .select(".cui-page")
-                    .boundingClientRect(() => {
-                        uni.pageScrollTo({
-                            scrollTop: top,
-                            duration: 100
-                        });
-                    })
-                    .exec();
+
+                uni.pageScrollTo({
+                    scrollTop: top,
+                    duration: 100
+                });
             };
 
             return {

@@ -33,6 +33,7 @@
     import { getParent, parseRpx } from "../../utils";
     import AsyncValidator from "../../utils/async-validator";
     import { useStyle } from "../../hooks";
+    import { useUi } from "@/gxota/ui";
 
     export default defineComponent({
         name: "BaseFormItem",
@@ -104,7 +105,6 @@
             const onRules = rules => {
                 if (!props.prop) return;
                 const rule = props.rules || rules?.[props.prop];
-
                 if (rule) {
                     if (!isRequired.value) {
                         isRequired.value = false;

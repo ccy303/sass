@@ -94,13 +94,14 @@
             };
 
             // 校验表单
-            const validate = callback => {
-                if (!props.disabled) {
+            const validate = async () => {
+                return new Promise((resolve, reject) => {
+                    if (props.disabled) {
+                        return resolve();
+                    }
                     validateField(fields.value, (valid, errors) => {
-                        callback?.(valid, errors);
                         if (!valid) {
                             const { field, message } = errors[0];
-
                             props.scrollToError && proxy.__children.forEach(e => e.scrollTo(field));
                             switch (props.tips) {
                                 case "toast":
@@ -115,9 +116,12 @@
                                     });
                                     break;
                             }
+                            return reject(errors);
+                        } else {
+                            return resolve();
                         }
                     });
-                }
+                });
             };
 
             // 根据字段校验表单
@@ -130,7 +134,6 @@
                             r[e] = rules.value[e];
                         }
                     });
-
                     const validator = new AsyncValidator(r);
                     const values = isArray(value) ? value : [value];
                     const data = {};
@@ -140,9 +143,7 @@
 
                         if (e) {
                             if (e.includes(".")) {
-                                e.split(".").forEach(e => {
-                                    d = d[e];
-                                });
+                                e.split(".").forEach(e => (d = d[e]));
                             } else {
                                 d = d[e];
                             }

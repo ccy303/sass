@@ -34,6 +34,7 @@
                 { label: "Loading 加载", path: "/pages/demo/loading" },
                 { label: "Sticky 吸顶", path: "/pages/demo/sticky" },
                 { label: "ReadMore 阅读更多", path: "/pages/demo/readMore" },
+                { label: "Fab 悬浮按钮", path: "/pages/demo/fab" }
             ]
         },
         {
@@ -78,7 +79,7 @@
                 { label: "Waterfall 瀑布流", path: "/pages/demo/waterfall" },
                 { label: "Scroller 滚动条", path: "/pages/demo/scroller" },
                 { label: "Skeleton 骨架图", path: "/pages/demo/skeleton" },
-                { label: "Collapse 折叠面板", path: "/pages/demo/collapse" },
+                { label: "Collapse 折叠面板", path: "/pages/demo/collapse" }
             ]
         },
         {

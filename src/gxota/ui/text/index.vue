@@ -125,7 +125,7 @@
         font-size: $cui-font-size;
 
         &.is-bold {
-            @apply font-500;
+            @apply font-700;
         }
 
         &.is-block {

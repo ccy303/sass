@@ -8,6 +8,7 @@
     "loading": { "uiTitle": "Loading 加载" },
     "sticky": { "uiTitle": "Sticky 吸顶" },
     "readMore": { "uiTitle": "ReadMore 阅读更多" },
+    "fab": { "uiTitle": "Fab 悬浮按钮" },
 
     "input": { "uiTitle": "Input 输入框" },
     "input-number": { "uiTitle": "InputNumber 计数器" },

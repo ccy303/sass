@@ -55,7 +55,7 @@
             // 是否禁用
             disabled: { type: Boolean, default: null },
             // 是否带有下边框
-            border: { type: Boolean, default: null },
+            border: { type: Boolean, default: true },
             // 是否显示右侧箭头
             arrowIcon: { type: Boolean, default: true }
         },

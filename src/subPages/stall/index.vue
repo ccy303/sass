@@ -13,10 +13,19 @@
         <div>
             <base-card>
                 <base-list>
-                    <base-list-item label="向左滑动" swipe="right">
+                    <base-list-item v-for="item in myShop" :key="item.id" :label="item.shopName" swipe="right">
                         <template #menu>
-                            <base-button type="primary">置顶</base-button>
-                            <base-button type="error">删除</base-button>
+                            <div class="flex-center">
+                                <navigator url="/subPages/stall/detail" class="mr-5">
+                                    <base-button size="small" type="primary">店铺设置</base-button>
+                                </navigator>
+                                <navigator url="/subPages/goods/index">
+                                    <base-button size="small" type="warning">商品设置</base-button>
+                                </navigator>
+                            </div>
+                        </template>
+                        <template #append>
+                            <base-text color="info">右滑更多</base-text>
                         </template>
                     </base-list-item>
                 </base-list>
@@ -32,9 +41,13 @@
 
     const user = storeToRefs(useUserStore()).user;
 
+    const myShop = ref([]);
+
     const getUserStallList = async () => {
-        const data = await list();
-        console.log(data);
+        const { records } = (await list()) || {};
+        if (records) {
+            myShop.value = records;
+        }
     };
 
     watch(

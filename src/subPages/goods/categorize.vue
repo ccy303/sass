@@ -9,11 +9,33 @@
                 <base-upload v-model="form.pics" :limit="1" />
             </base-form-item>
         </base-form>
+        <base-footer :border="true">
+            <base-button size="large" round fill @tap="clear">清空</base-button>
+            <base-button size="large" round fill @tap="submit" type="primary" loadingColor="#" :loading="loading">提交</base-button>
+        </base-footer>
     </base-page>
 </template>
 
 <script setup>
-    const form = ref({});
+    import { useUi } from "@/gxota/ui";
+
+    const form = ref({
+        name: ""
+    });
     const rules = ref({});
-    const loading = ref({});
+    const loading = ref(false);
+    const Form = ref(false);
+
+    const ui = useUi();
+
+    const submit = async () => {
+        await Form.value?.validate();
+        console.log(form);
+        ui.showToast("提交成功");
+        loading.value = true;
+    };
+
+    const clear = () => {
+        Form.value?.reset();
+    };
 </script>

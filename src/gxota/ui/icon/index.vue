@@ -5,6 +5,7 @@
 <script>
     import { parseRpx } from "../../utils";
     import { useStyle } from "../../hooks";
+
     export default defineComponent({
         name: "BaseIcon",
         props: {

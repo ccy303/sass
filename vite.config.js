@@ -14,6 +14,9 @@ export default defineConfig({
         }
     },
     build: {
-        sourcemap: true
+        sourcemap: true,
+        watch: {
+		    exclude: ['node_modules/**', "/__uno.css"]
+	    },
     }
 });

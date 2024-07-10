@@ -1,6 +1,23 @@
 <template>
     <base-page padding="0">
-        <base-tabs v-model="active" :list="list"></base-tabs>
+        <base-collapse ref="collapse">
+            <base-collapse-item title="默认开启">
+                <text class="text">
+                    折叠内容主体，这是一段比较长内容。默认折叠主要内容，只显示当前项标题。点击标题展开，才能看到这段文字。再次点击标题，折叠内容。
+                </text>
+            </base-collapse-item>
+            <base-collapse-item
+                title="折叠内容"
+                thumb="http://gips0.baidu.com/it/u=3602773692,1512483864&fm=3028&app=3028&f=JPEG&fmt=auto?w=960&h=1280"
+            >
+                <text class="text">
+                    折叠内容主体，这是一段比较长内容。默认折叠主要内容，只显示当前项标题。点击标题展开，才能看到这段文字。再次点击标题，折叠内容。
+                </text>
+            </base-collapse-item>
+            <base-collapse-item title="禁用状态" disabled>
+                <text class="text">禁用状态内容主体，页面上是看不到这段话的。</text>
+            </base-collapse-item>
+        </base-collapse>
     </base-page>
 
     <base-fab>
@@ -18,17 +35,6 @@
 </template>
 
 <script setup>
-    const list = ref([
-        { label: "百亿补贴", value: 1 },
-        { label: "包邮", value: 2 },
-        { label: "限时达", value: 3 },
-        { label: "同城速配", value: 4 },
-        { label: "货到付款", value: 5 },
-        { label: "分期免息", value: 6 },
-        { label: "配送全球", value: 7 },
-        { label: "促销", value: 8 }
-    ]);
-
     const active = ref(1);
 </script>
 

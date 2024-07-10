@@ -19,7 +19,7 @@
                                 <navigator url="/subPages/stall/detail" class="mr-5">
                                     <base-button size="small" type="primary">店铺设置</base-button>
                                 </navigator>
-                                <navigator url="/subPages/goods/index">
+                                <navigator url="/subPages/goods/categorizeList">
                                     <base-button size="small" type="warning">商品设置</base-button>
                                 </navigator>
                             </div>

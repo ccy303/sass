@@ -34,7 +34,6 @@
         loading.value = true;
         try {
             const data = await createCategory(form.value);
-            console.log(data);
             loading.value = false;
             ui.showToast("提交成功");
             Form.value?.reset();

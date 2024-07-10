@@ -6,7 +6,6 @@ export const useUi = () => {
             return router.currentPage()?.["BasePage"]?.loaded;
         },
         get widthNav() {
-            console.log();
             return router.currentPage()?.["BasePage"]?.widthNav;
         }
     };

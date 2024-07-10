@@ -42,8 +42,8 @@
             // horizontal，vertical,
             popDirection: { type: String, default: "horizontal" }
         },
-        setup(props, { slots }) {
-            const { proxy } = getCurrentInstance();
+        emits: ["fabClick"],
+        setup(props, { slots, emit }) {
             const fabShow = ref(false);
             const isShow = ref(false);
             const styles = ref({
@@ -60,25 +60,12 @@
             });
 
             const click = () => {
+                emit("fabClick");
                 if (!slots.default) {
                     return;
                 }
                 isShow.value = !isShow.value;
             };
-
-            const getSlotWidth = () => {
-                uni.createSelectorQuery()
-                    .in(proxy)
-                    .select(".cui-fab__content")
-                    .boundingClientRect(res => {
-                        console.log(res);
-                    })
-                    .exec();
-            };
-
-            nextTick(() => {
-                getSlotWidth();
-            });
 
             return { fabShow, isShow, styles, isConetnt, click };
         }

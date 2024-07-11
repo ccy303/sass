@@ -479,6 +479,7 @@ const handleAddToCartInModal = () => {
 };
 const openCartPopup = () => {
     //打开/关闭购物车列表popup
+    console.log('打开/关闭购物车列表popup')
     cartPopupVisible.value = !cartPopupVisible.value;
 };
 const handleCartClear = () => {

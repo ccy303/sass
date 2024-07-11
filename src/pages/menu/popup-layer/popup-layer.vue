@@ -1,149 +1,125 @@
 <template>
-	<view>
-		<view v-show="ifshow" @tap="ableClose" @touchmove.stop.prevent class="popup-layer" >
-		</view>
-		<view class="popup-content" @tap.stop="stopEvent" :style="_location">
-			<slot name="content"></slot>
-		</view>
-	</view>
+    <view>
+        <view v-show="ifshow" @tap="ableClose" @touchmove.stop.prevent class="popup-layer"> </view>
+        <view class="popup-content" @tap.stop="stopEvent" :style="_location">
+            <slot name="content"></slot>
+        </view>
+    </view>
 </template>
 
-<script>
-	export default {
-		name: 'PopupLayer',
-		model: {
-			prop: "showPop",
-			event: "change"
-		},
-		props: {
-			showPop:{
-				type:Boolean,
-				default:false,
-			},
-			direction: {
-				type: String,
-				default: 'top', // 方向  top，bottom，left，right 
-			},
-			autoClose: {
-				type: Boolean,
-				default: true,
-			}
-		},
-		data() {
-			return {
-				ifshow: false, // 是否展示,
-				//#ifdef H5
-				translateValue: -150, // 位移距离
-				//#endif
-				timer: null,
-				iftoggle: false,
+<script setup>
+    const props = defineProps({
+        showPop: {
+            type: Boolean,
+            default: false
+        },
+        direction: {
+            type: String,
+            default: "top" // 方向  top，bottom，left，right
+        },
+        autoClose: {
+            type: Boolean,
+            default: true
+        }
+    });
 
-			};
-		},
-		computed: {
-			_translate() {
-				const transformObj = {
-					'top': `transform:translateY(${-this.translateValue}%)`,
-					'bottom': `transform:translateY(${this.translateValue}%)`,
-					'left': `transform:translateX(${-this.translateValue}%)`,
-					'right': `transform:translateX(${this.translateValue}%)`
-				};
-				return transformObj[this.direction]
-			},
-			_location() {
-				const positionValue = {
-					//#ifndef H5
-					'top': 'bottom:0px;width:100%;',
-					//#endif
-					'bottom': 'top:0px;width:100%;',
-					'left': 'right:0px;height:100%;',
-					'right': 'left:0px;height:100%;',
-				};
-				return positionValue[this.direction] + this._translate;
-			}
-		},
-		mounted(){
-			if(this.showPop){
-				// console.log(222);
-				this.show();
-			}
-		},
-		watch:{
-			showPop(value){
-				console.log(value)
-				if(value){
-					this.show();
-				}else{
-					this.close();
-				}
-			}	
-		},
-		methods: {
-			stopMove(event){
-				console.log(11);
-				console.log(event);
-				return;
-			},
-			show() {
-				this.ifshow = true;
-				let _open = setTimeout(() => {
-					this.translateValue = 0;
-					_open = null;
-				}, 100)
-				let _toggle = setTimeout(() => {
-					this.iftoggle = true;
-					_toggle = null;
-				}, 300);
-			},
-			close() {
-				if (this.timer !== null || !this.iftoggle) {
-					return;
-				}
-				this.translateValue = -100;
-				//#ifdef H5
-				this.translateValue = -150
-				//#endif
-				this.timer = setTimeout(() => {
-					this.ifshow = false;
-					this.timer = null;
-					this.iftoggle = false;
-					this.$emit('closeCallBack', null);
-					this.$emit('change',false)
-				}, 300);
-			},
-			ableClose() {
-				if (this.autoClose) {
-					this.close();
-				}
-			},
-			stopEvent(event) {},
-			doSome(){
-				console.log(111222111111111);
-			}
+    const emit = defineEmits(["closeCallBack", "change"]);
 
+    const ifshow = ref(false);
+
+    const translateValue = ref(-150);
+
+    const timer = ref(null);
+    const iftoggle = ref(false);
+
+    const _translate = computed(() => {
+        const transformObj = {
+            top: `transform:translateY(${-translateValue.value}%)`,
+            bottom: `transform:translateY(${translateValue.value}%)`,
+            left: `transform:translateX(${-translateValue.value}%)`,
+            right: `transform:translateX(${translateValue.value}%)`
+        };
+        return transformObj[props.direction];
+    });
+
+    const _location = computed(() => {
+        const positionValue = {
+            //#ifndef H5
+            top: "bottom:0px;width:100%;",
+            //#endif
+            bottom: "top:0px;width:100%;",
+            left: "right:0px;height:100%;",
+            right: "left:0px;height:100%;"
+        };
+        return positionValue[props.direction] + _translate.value;
+    });
+
+    onMounted(() => {
+        if (props.showPop) {
+            show();
+        }
+    });
+
+	watch(() => props.showPop, (value) => {
+		if(value) {
+			show()
+		} else {
+			close()
 		}
-	}
+	})
+
+    const show = () => {
+        ifshow.value = true;
+
+        setTimeout(() => {
+            translateValue.value = 0;
+        }, 100);
+        setTimeout(() => {
+            iftoggle.value = true;
+        }, 300);
+    };
+    const close = () => {
+        if (timer.value !== null || !iftoggle.value) {
+            return;
+        }
+        translateValue.value = -100;
+        //#ifdef H5
+        translateValue.value = -150;
+        //#endif
+        timer.value = setTimeout(() => {
+            ifshow.value = false;
+            timer.value = null;
+            iftoggle.value = false;
+            emit("closeCallBack", null);
+            emit("change", false);
+        }, 300);
+    };
+    const ableClose = () => {
+        if (props.autoClose) {
+            close();
+        }
+    };
 </script>
 
 <style lang="scss">
-	.popup-layer {
-		position: fixed;
-		z-index: 9990;
-		background: rgba(0, 0, 0, .3);
-		height: 100%;
-		width: 100%;
-		top: 0px;
-		left: 0px;
-		overflow: hidden;
-	}
+    .popup-layer {
+        position: fixed;
+        z-index: 9990;
+        background: rgba(0, 0, 0, 0.3);
+        height: 100%;
+        width: 100%;
+        top: 0px;
+        left: 0px;
+        overflow: hidden;
+    }
 
-	.popup-content {
-		position: fixed;
-		z-index: 9991;
-		background: #FFFFFF;
-		transition: all .3s ease;
-		overflow: hidden;
-		box-sizing: border-box;
-		// border:1px solid red;
-	}
+    .popup-content {
+        position: fixed;
+        z-index: 9991;
+        background: #ffffff;
+        transition: all 0.3s ease;
+        overflow: hidden;
+        box-sizing: border-box;
+        // border:1px solid red;
+    }
 </style>

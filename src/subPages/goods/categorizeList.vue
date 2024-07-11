@@ -5,10 +5,10 @@
                 <base-list-item v-for="item in list" :key="item.id" :label="item.name" swipe="right">
                     <template #menu>
                         <div class="flex-center">
-                            <navigator url="/shop/goods/categorizeDtl" class="mr-5">
+                            <navigator :url="`/subPages/goods/categorizeDtl?id=${item.id}`" class="mr-5">
                                 <base-button size="small" type="warning">编辑</base-button>
                             </navigator>
-                            <navigator url="/shop/goods/categorizeList" class="mr-5">
+                            <navigator :url="`/subPages/goods/goodsList?categorizeId=${item.id}`" class="mr-5">
                                 <base-button size="small" type="primary">商品</base-button>
                             </navigator>
                             <base-button size="small" type="error" @tap="() => del(item.id)">删除</base-button>
@@ -58,7 +58,7 @@
     });
 
     const add = () => {
-        uni.navigateTo({ url: "/subPages/goods/categorizeDtl?type=add" });
+        uni.navigateTo({ url: "/subPages/goods/categorizeDtl" });
     };
 </script>
 

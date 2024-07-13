@@ -16,7 +16,7 @@
 </template>
 
 <script setup>
-    import { submitCategory, getCategory } from "@/http/goods";
+    import { submitCategory, getCategory ,getGood} from "@/http/goods";
     import { useUi } from "@/gxota/ui";
     import { onLoad } from "@dcloudio/uni-app";
 

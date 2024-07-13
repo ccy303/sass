@@ -20,14 +20,14 @@ export const getCategory = data => {
     return request.get({ url: `${import.meta.env.VITE_BASE_URL}/blade-mall/category/detail`, data });
 };
 
-export const getGoodsList = data => {
-    return request.get({ url: `${import.meta.env.VITE_BASE_URL}/blade-mall/goods/list`, data });
+export const getGoodList = data => {
+    return request.get({ url: `${import.meta.env.VITE_BASE_URL}/blade-mall/goods/page`, data });
 };
 
-export const getGoods = data => {
+export const getGood = data => {
     return request.get({ url: `${import.meta.env.VITE_BASE_URL}/blade-mall/goods/detail`, data });
-}
+};
 
-export const deleteGoods = data => {
+export const deleteGood = data => {
     return request.post({ url: `${import.meta.env.VITE_BASE_URL}/blade-mall/goods/remove?ids=${data.join(",")}` });
-}
+};

@@ -23,7 +23,8 @@
             "pages": [
                 { "path": "categorizeList", "uiTitle": "分类管理" },
                 { "path": "categorizeDtl", "uiTitle": "分类管理" },
-                { "path": "goodsList", "uiTitle": "商品列表" }
+                { "path": "goodsList", "uiTitle": "商品列表" },
+                { "path": "goodsDtl", "uiTitle": "商品管理" }
             ]
         }
     ],

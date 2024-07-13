@@ -1,22 +1,27 @@
 <template>
     <base-page :padding="20">
-        <base-card v-for="item in list" :key="item.id" label="ASDASD">
-            <template #footer>
-                <div class="flex-center">
-                    <navigator url="/pages/" class="mr-5">
-                        <base-button size="small" type="primary">编辑</base-button>
-                    </navigator>
-                    <base-button size="small" type="error" @tap="() => del(item.id)">删除</base-button>
-                </div>
-            </template>
-        </base-card>
+        <template v-if="list.length">
+            <base-card v-for="item in list" :key="item.id" label="ASDASD">
+                <template #footer>
+                    <div class="flex-center">
+                        <navigator url="/pages/" class="mr-5">
+                            <base-button size="small" type="primary">编辑</base-button>
+                        </navigator>
+                        <base-button size="small" type="error" @tap="() => del(item.id)">删除</base-button>
+                    </div>
+                </template>
+            </base-card>
+        </template>
+        <template v-else>
+            <base-empty />
+        </template>
     </base-page>
 
     <base-fab @fabClick="add" />
 </template>
 
 <script setup>
-    import { getGoodsList, deleteGoods } from "@/http/goods";
+    import { getGoodList, deleteGood } from "@/http/goods";
     import { onShow, onLoad } from "@dcloudio/uni-app";
     import { useUi } from "@/gxota/ui";
 
@@ -35,7 +40,7 @@
             type: "warning",
             async callback(type) {
                 if (type == "confirm") {
-                    await deleteGoods([id]);
+                    await deleteGood([id]);
                     ui.showToast("删除成功");
                     getList();
                 }
@@ -44,9 +49,8 @@
     };
 
     const getList = async () => {
-        const { records } = await getGoodsList({});
-        // list.value = records;
-        list.value = [1, 2, 3, 4, 5];
+        const { records } = await getGoodList({ categoryId: categorizeId.value });
+        list.value = records;
     };
 
     onShow(() => {

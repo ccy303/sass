@@ -31,3 +31,7 @@ export const getGood = data => {
 export const deleteGood = data => {
     return request.post({ url: `${import.meta.env.VITE_BASE_URL}/blade-mall/goods/remove?ids=${data.join(",")}` });
 };
+
+export const submitGood = data => {
+    return request.post({ url: `${import.meta.env.VITE_BASE_URL}/blade-mall/goods/submit`, data });
+};

@@ -1,42 +1,116 @@
 <template>
-    <base-page>
-        <base-form ref="Form" v-model="form" :rules="rules" :disabled="loading" label-position="left">
-            <base-form-item label="分类名称" prop="name" required>
-                <base-input v-model="form.name" placeholder="请填写分类名称"></base-input>
-            </base-form-item>
-            <base-form-item label="分类图标" prop="image" label-position="left" required>
-                <base-upload v-model="form.image" :limit="1" />
-            </base-form-item>
-        </base-form>
+    <base-page :padding="20">
+        <div class="bg-#fff p-10">
+            <base-form ref="Form" :labelWidth="170" v-model="form" :rules="rules" :disabled="loading" label-position="left">
+                <base-form-item label="商品分类" prop="categories.ids" required>
+                    <base-select-popup v-model="form.categories.ids" multiple :options="categoryList" />
+                </base-form-item>
+                <base-form-item label="商品名称" prop="name" required>
+                    <base-input v-model="form.name" placeholder="请填写分类名称"></base-input>
+                </base-form-item>
+                <base-form-item label="商品主图" prop="image" label-position="left" required>
+                    <base-upload v-model="form.image" :limit="1" />
+                </base-form-item>
+                <base-form-item label="商品图片" prop="images" label-position="left" required>
+                    <base-upload v-model="form.image" :limit="6" />
+                </base-form-item>
+                <base-form-item label="商品原价" prop="originalPrice" label-position="left" required>
+                    <base-input-number :precision="2" :step="0.01" v-model="form.originalPrice" />
+                </base-form-item>
+                <base-form-item label="商品优惠价" prop="discountPrice" label-position="left" required>
+                    <base-input-number :precision="2" :step="0.01" v-model="form.discountPrice" />
+                </base-form-item>
+                <div class="my-10">
+                    <base-button type="primary" @tap="addAttr">商品属性添加</base-button>
+                </div>
+                <base-form-item label="简要描述" prop="brief" label-position="left" required>
+                    <base-textarea v-model="form.brief" :limit="6" />
+                </base-form-item>
+                <base-form-item label="详细描述" prop="description" label-position="left" required>
+                    <base-textarea v-model="form.description" :limit="6" />
+                </base-form-item>
+            </base-form>
+        </div>
+
         <base-footer :border="true">
             <base-button size="large" round fill @tap="clear">清空</base-button>
             <base-button size="large" round fill @tap="submit" type="primary" loadingColor="#fff" :loading="loading">提交</base-button>
         </base-footer>
+
+        <base-confirm ref="attrConfirm">
+            <div class="h-60vh overflow-auto">
+                <base-scroller :refresherEnabled="false">
+                    <base-form :labelWidth="120" v-model="attrs" label-position="right" ref="AttrsForm">
+                        <base-form-item label="属性名称">
+                            <base-input v-model="attrs.name" />
+                        </base-form-item>
+                        <!-- <base-form-item label="属性价格">
+                    <base-radio-group v-model="attrs.isPrice" :border="true">
+                        <base-radio label="1">开启</base-radio>
+                        <base-radio label="0">关闭</base-radio>
+                    </base-radio-group>
+                    </base-form-item> -->
+                        <base-divider>属性选项</base-divider>
+                        <template v-for="(item, idx) in attrs.attrs" :key="idx">
+                            <base-form-item label="选项名称">
+                                <base-input v-model="item.name" />
+                            </base-form-item>
+                            <base-form-item label="价格增量">
+                                <base-input-number v-model="item.discountPrice" :min="-100" :step="0.01" :precision="2" />
+                            </base-form-item>
+                            <base-divider>
+                                选项{{ idx + 1 }}
+                                <base-button v-if="idx != 0" type="error" @tap="removeAttrOptions(idx)" size="small">删除</base-button>
+                            </base-divider>
+                        </template>
+                        <base-divider>
+                            <base-button type="success" @tap="addAttrOptions" size="small">添加属性选项</base-button>
+                        </base-divider>
+                    </base-form>
+                </base-scroller>
+            </div>
+        </base-confirm>
     </base-page>
 </template>
 
 <script setup>
-    import { submitCategory, getCategory ,getGood} from "@/http/goods";
+    import { getGood, submitGood, getCategoryList } from "@/http/goods";
     import { useUi } from "@/gxota/ui";
     import { onLoad } from "@dcloudio/uni-app";
 
     const form = ref({
-        id: "",
         name: "",
-        image: "啊实打实的"
+        image: "asd",
+        images: "asd",
+        originalPrice: "",
+        discountPrice: "",
+        categories: { ids: [] },
+        brief: "",
+        description: "",
+        attrs: []
     });
 
+    const attrs = ref({
+        name: "",
+        attrs: [{ name: "", discountPrice: 0 }]
+    });
+
+    const attrConfirm = ref();
     const rules = ref({});
     const loading = ref(false);
+    const categoryList = ref([]);
+
     const Form = ref(false);
+    const AttrsForm = ref(false);
 
     const ui = useUi();
 
     const submit = async () => {
         await Form.value?.validate();
+        const submitData = { ...form.value, categories: form.value.categories.ids.map(id => ({ id })) };
         loading.value = true;
         try {
-            await submitCategory(form.value);
+            await submitGood(submitData);
             loading.value = false;
             ui.showToast("提交成功");
             Form.value?.reset();
@@ -45,9 +119,46 @@
         }
     };
 
+    const addAttrOptions = () => {
+        attrs.value.attrs.push({ name: "", discountPrice: 0 });
+    };
+
+    const removeAttrOptions = idx => {
+        attrs.value.attrs.splice(idx, 1);
+    };
+
+    const addAttr = () => {
+        attrConfirm.value.open({
+            title: "商品属性添加",
+            width: "90vw",
+            async beforeClose(type, { done }) {
+                if (type == "confirm") {
+                    if (!attrs.value.name) {
+                        return ui.showToast("请填写属性名称");
+                    }
+                    const index = attrs.value.attrs.findIndex(item => !item.name);
+                    if (index != -1) {
+                        return ui.showToast(`请填写选项${index + 1}名称`);
+                    }
+                }
+                form.value.attrs.push({
+                    name: attrs.value.name,
+                    attrOptions: attrs.value.attrs.map(item => ({ ...item }))
+                });
+                done();
+                AttrsForm.value?.reset();
+            }
+        });
+    };
+
     const getDtl = async () => {
-        const data = await getCategory({ id: form.value.id });
+        const data = await getGood({ id: form.value.id });
         form.value = data;
+    };
+
+    const getCategoryListFn = async () => {
+        const { records } = await getCategoryList({ size: 100 });
+        categoryList.value = records.map(v => ({ label: v.name, value: v.id }));
     };
 
     const clear = () => {
@@ -55,9 +166,15 @@
     };
 
     onLoad(options => {
-        if (options.id) {
-            form.value.id = options.id;
+        if (options.categorizeId) {
+            form.value.categories.ids = [options.categorizeId];
+        }
+        if (options.goodId) {
+            form.value.id = options.goodId;
             getDtl();
         }
+        getCategoryListFn();
     });
 </script>
+
+<style lang="scss" scoped></style>

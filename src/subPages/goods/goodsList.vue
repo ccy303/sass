@@ -4,7 +4,7 @@
             <base-card v-for="item in list" :key="item.id" label="ASDASD">
                 <template #footer>
                     <div class="flex-center">
-                        <navigator url="/pages/" class="mr-5">
+                        <navigator :url="`/subPages/goods/goodsDtl?categorizeId=${categorizeId.value}&goodId=${item.id}`" class="mr-5">
                             <base-button size="small" type="primary">编辑</base-button>
                         </navigator>
                         <base-button size="small" type="error" @tap="() => del(item.id)">删除</base-button>
@@ -30,7 +30,7 @@
     const list = ref([]);
 
     const add = () => {
-        uni.navigateTo({ url: "/subPages/goods/goodsDtl" });
+        uni.navigateTo({ url: `/subPages/goods/goodsDtl?categorizeId=${categorizeId.value}` });
     };
 
     const del = id => {

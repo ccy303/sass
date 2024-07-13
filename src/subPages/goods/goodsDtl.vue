@@ -107,7 +107,12 @@
 
     const submit = async () => {
         await Form.value?.validate();
-        const submitData = { ...form.value, categories: form.value.categories.ids.map(id => ({ id })) };
+        const submitData = {
+            ...form.value,
+            categories: form.value.categories.ids.map(id => ({ id })),
+            originalPrice: (form.value.originalPrice || 0) * 100,
+            discountPrice: (form.value.discountPrice || 0) * 100
+        };
         loading.value = true;
         try {
             await submitGood(submitData);
@@ -143,7 +148,7 @@
                 }
                 form.value.attrs.push({
                     name: attrs.value.name,
-                    attrOptions: attrs.value.attrs.map(item => ({ ...item }))
+                    attrOptions: attrs.value.attrs.map(item => ({ ...item, discountPrice: (item.discountPrice || 0) * 100 }))
                 });
                 done();
                 AttrsForm.value?.reset();

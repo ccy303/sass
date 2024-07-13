@@ -1,7 +1,20 @@
 <template>
     <base-page :padding="20">
         <template v-if="list.length">
-            <base-card v-for="item in list" :key="item.id" label="ASDASD">
+            <base-card v-for="item in list" :key="item.id" :label="item.name">
+                <div>
+                    <base-text color="info">商品简述：</base-text>
+                    <base-text>{{ item.brief }}</base-text>
+                </div>
+                <div>
+                    <base-text color="info">创建时间：</base-text>
+                    <base-text>{{ item.createTime }}</base-text>
+                </div>
+                <div>
+                    <base-text color="info">价格：</base-text>
+                    <base-text type="price">{{ item.discountPrice }}</base-text>
+                    <base-text type="price">{{ item.originalPrice }}</base-text>
+                </div>
                 <template #footer>
                     <div class="flex-center">
                         <navigator :url="`/subPages/goods/goodsDtl?categorizeId=${categorizeId.value}&goodId=${item.id}`" class="mr-5">

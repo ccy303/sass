@@ -1,7 +1,7 @@
 <template>
     <base-page :padding="20">
         <div class="bg-#fff p-10">
-            <base-form ref="Form" :labelWidth="170" v-model="form" :rules="rules" :disabled="loading" label-position="left">
+            <base-form ref="Form" :labelWidth="180" v-model="form" :rules="rules" :disabled="loading" label-position="left">
                 <base-form-item label="商品分类" prop="categories.ids" required>
                     <base-select-popup v-model="form.categories.ids" multiple :options="categoryList" />
                 </base-form-item>
@@ -14,14 +14,29 @@
                 <base-form-item label="商品图片" prop="images" label-position="left" required>
                     <base-upload v-model="form.image" :limit="6" />
                 </base-form-item>
-                <base-form-item label="商品原价" prop="originalPrice" label-position="left" required>
+                <base-form-item label="商品原价(元)" prop="originalPrice" label-position="left" required>
                     <base-input-number :precision="2" :step="0.01" v-model="form.originalPrice" />
                 </base-form-item>
-                <base-form-item label="商品优惠价" prop="discountPrice" label-position="left" required>
+                <base-form-item label="优惠价(元)" prop="discountPrice" label-position="left" required>
                     <base-input-number :precision="2" :step="0.01" v-model="form.discountPrice" />
                 </base-form-item>
+                <div>
+                    <base-divider>商品属性</base-divider>
+                    <div v-for="(item, idx) in allAttrs" :key="idx">
+                        <template v-for="(tag, tagIdx) in item.attrOptions" :key="tagIdx">
+                            <base-tag plain>{{ tag.name }} {{ tag.discountPrice ? `¥${tag.discountPrice / 100}` : "" }}</base-tag>
+                        </template>
+                        <base-divider>
+                            属性{{ idx + 1 }}：{{ item.name }}
+                            <div>
+                                <base-button size="small" type="primary" @tap="() => editAttr(idx)">编辑</base-button>
+                                <base-button size="small" type="error" @tap="() => delAttr(idx)">删除</base-button>
+                            </div>
+                        </base-divider>
+                    </div>
+                </div>
                 <div class="my-10">
-                    <base-button type="primary" @tap="addAttr">商品属性添加</base-button>
+                    <base-button type="primary" @tap="addAttr" size="small">商品属性添加</base-button>
                 </div>
                 <base-form-item label="简要描述" prop="brief" label-position="left" required>
                     <base-textarea v-model="form.brief" :limit="6" />
@@ -51,7 +66,7 @@
                     </base-radio-group>
                     </base-form-item> -->
                         <base-divider>属性选项</base-divider>
-                        <template v-for="(item, idx) in attrs.attrs" :key="idx">
+                        <template v-for="(item, idx) in attrs.attrOptions" :key="idx">
                             <base-form-item label="选项名称">
                                 <base-input v-model="item.name" />
                             </base-form-item>
@@ -60,7 +75,7 @@
                             </base-form-item>
                             <base-divider>
                                 选项{{ idx + 1 }}
-                                <base-button v-if="idx != 0" type="error" @tap="removeAttrOptions(idx)" size="small">删除</base-button>
+                                <base-button v-if="idx != 0" type="error" @tap="() => removeAttrOptions(idx)" size="small">删除</base-button>
                             </base-divider>
                         </template>
                         <base-divider>
@@ -92,8 +107,10 @@
 
     const attrs = ref({
         name: "",
-        attrs: [{ name: "", discountPrice: 0 }]
+        attrOptions: [{ name: "", discountPrice: 0 }]
     });
+
+    const allAttrs = ref([]);
 
     const attrConfirm = ref();
     const rules = ref({});
@@ -124,12 +141,15 @@
         }
     };
 
+    const editAttr = idx => {};
+    const delAttr = idx => {};
+
     const addAttrOptions = () => {
-        attrs.value.attrs.push({ name: "", discountPrice: 0 });
+        attrs.value.attrOptions.push({ name: "", discountPrice: 0 });
     };
 
     const removeAttrOptions = idx => {
-        attrs.value.attrs.splice(idx, 1);
+        attrs.value.attrOptions.splice(idx, 1);
     };
 
     const addAttr = () => {
@@ -141,15 +161,17 @@
                     if (!attrs.value.name) {
                         return ui.showToast("请填写属性名称");
                     }
-                    const index = attrs.value.attrs.findIndex(item => !item.name);
+                    const index = attrs.value.attrOptions.findIndex(item => !item.name);
                     if (index != -1) {
                         return ui.showToast(`请填写选项${index + 1}名称`);
                     }
+
+                    form.value.attrs.push({
+                        name: attrs.value.name,
+                        attrOptions: attrs.value.attrOptions.map(item => ({ ...item, discountPrice: (item.discountPrice || 0) * 100 }))
+                    });
                 }
-                form.value.attrs.push({
-                    name: attrs.value.name,
-                    attrOptions: attrs.value.attrs.map(item => ({ ...item, discountPrice: (item.discountPrice || 0) * 100 }))
-                });
+
                 done();
                 AttrsForm.value?.reset();
             }
@@ -158,7 +180,14 @@
 
     const getDtl = async () => {
         const data = await getGood({ id: form.value.id });
-        form.value = data;
+        form.value = {
+            ...data,
+            categories: { ids: data.categories.map(v => v.id) },
+            originalPrice: data.originalPrice ? data.originalPrice / 100 : 0,
+            discountPrice: data.discountPrice ? data.discountPrice / 100 : 0
+        };
+
+        allAttrs.value = data.attrs;
     };
 
     const getCategoryListFn = async () => {

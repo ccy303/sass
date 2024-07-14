@@ -12,8 +12,8 @@
                 </div>
                 <div>
                     <base-text color="info">价格：</base-text>
-                    <base-text type="price">{{ item.discountPrice }}</base-text>
-                    <base-text type="price">{{ item.originalPrice }}</base-text>
+                    <base-text type="price">{{ item.discountPrice ? item.discountPrice / 100 : item.discountPrice }}</base-text>
+                    <base-text type="price" :size="24" lineThrough>{{ item.originalPrice ? item.originalPrice / 100 : item.originalPrice }}</base-text>
                 </div>
                 <template #footer>
                     <div class="flex-center">

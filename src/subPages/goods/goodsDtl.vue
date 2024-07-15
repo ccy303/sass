@@ -130,6 +130,7 @@
             loading.value = false;
             ui.showToast("提交成功");
             Form.value?.reset();
+            allAttrs.value = [];
         } catch (err) {
             loading.value = false;
         }

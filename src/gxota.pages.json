@@ -26,6 +26,10 @@
                 { "path": "categorize", "uiTitle": "分类管理" },
                 { "path": "good", "uiTitle": "商品管理" }
             ]
+        },
+        {
+            "root": "subPages/pay",
+            "pages": [{ "path": "pay", "uiTitle": "订单结算" }]
         }
     ],
     "globalStyle": {

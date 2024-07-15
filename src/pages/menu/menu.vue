@@ -509,16 +509,16 @@ const handleCartItemReduce = index => {
     }
 };
 const toPay = () => {
-    if (!orderStore.isLogin) {
-        uni.navigateTo({ url: "/pages/login/login" });
-        return;
-    }
+    // if (!orderStore.isLogin) {
+    //     uni.navigateTo({ url: "/subPages/login/index" });
+    //     return;
+    // }
 
     uni.showLoading({ title: "加载中" });
     uni.setStorageSync("cart", JSON.parse(JSON.stringify(cart.value)));
 
     uni.navigateTo({
-        url: "/pages/pay/pay"
+        url: "/subPages/pay/pay"
     });
     uni.hideLoading();
 };

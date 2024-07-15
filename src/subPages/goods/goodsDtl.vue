@@ -24,14 +24,14 @@
                     <base-divider>商品属性</base-divider>
                     <div v-for="(item, idx) in allAttrs" :key="idx">
                         <template v-for="(tag, tagIdx) in item.attrOptions" :key="tagIdx">
-                            <base-tag plain>{{ tag.name }} {{ tag.discountPrice ? `¥${tag.discountPrice / 100}` : "" }}</base-tag>
+                            <base-tag plain :margin="[0, 10, 0, 0]">
+                                {{ tag.name }} {{ tag.discountPrice ? `¥${tag.discountPrice / 100}` : "" }}
+                            </base-tag>
                         </template>
                         <base-divider>
                             属性{{ idx + 1 }}：{{ item.name }}
-                            <div>
-                                <base-button size="small" type="primary" @tap="() => editAttr(idx)">编辑</base-button>
-                                <base-button size="small" type="error" @tap="() => delAttr(idx)">删除</base-button>
-                            </div>
+                            <base-button size="small" type="primary" @tap="() => editAttr(idx)">编辑</base-button>
+                            <base-button size="small" type="error" @tap="() => delAttr(idx)">删除</base-button>
                         </base-divider>
                     </div>
                 </div>
@@ -59,12 +59,6 @@
                         <base-form-item label="属性名称">
                             <base-input v-model="attrs.name" />
                         </base-form-item>
-                        <!-- <base-form-item label="属性价格">
-                    <base-radio-group v-model="attrs.isPrice" :border="true">
-                        <base-radio label="1">开启</base-radio>
-                        <base-radio label="0">关闭</base-radio>
-                    </base-radio-group>
-                    </base-form-item> -->
                         <base-divider>属性选项</base-divider>
                         <template v-for="(item, idx) in attrs.attrOptions" :key="idx">
                             <base-form-item label="选项名称">
@@ -141,8 +135,29 @@
         }
     };
 
-    const editAttr = idx => {};
-    const delAttr = idx => {};
+    const editAttr = idx => {
+        attrs.value = { ...allAttrs.value[idx] };
+
+        attrConfirm.value.open({
+            title: "商品属性编辑",
+            width: "90vw",
+            async beforeClose(type, { done }) {
+                if (type == "confirm") {
+                    allAttrs.value[idx] = {
+                        ...allAttrs.value[idx],
+                        name: attrs.value.name,
+                        attrOptions: attrs.value.attrOptions.map(item => ({ ...item, discountPrice: (item.discountPrice || 0) * 100 }))
+                    };
+                }
+                done();
+                AttrsForm.value?.reset();
+            }
+        });
+    };
+
+    const delAttr = idx => {
+        allAttrs.value.splice(idx, 1);
+    };
 
     const addAttrOptions = () => {
         attrs.value.attrOptions.push({ name: "", discountPrice: 0 });

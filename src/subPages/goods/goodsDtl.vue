@@ -136,7 +136,10 @@
     };
 
     const editAttr = idx => {
-        attrs.value = { ...allAttrs.value[idx] };
+        attrs.value = {
+            ...allAttrs.value[idx],
+            attrOptions: allAttrs.value[idx].attrOptions.map(item => ({ ...item, discountPrice: item.discountPrice ? item.discountPrice / 100 : 0 }))
+        };
 
         attrConfirm.value.open({
             title: "商品属性编辑",

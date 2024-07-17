@@ -131,6 +131,7 @@
             ui.showToast("提交成功");
             Form.value?.reset();
             allAttrs.value = [];
+            submitData.id && uni.navigateBack();
         } catch (err) {
             loading.value = false;
         }

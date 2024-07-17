@@ -10,13 +10,13 @@
                 </navigator>
             </div>
         </div>
-        <div>
+        <div v-else>
             <base-card>
                 <base-list>
                     <base-list-item v-for="item in myShop" :key="item.id" :label="item.shopName" swipe="right">
                         <template #menu>
                             <div class="flex-center">
-                                <navigator url="/subPages/stall/detail" class="mr-5">
+                                <navigator :url="`/subPages/stall/detail?id=${item.id}`" class="mr-5">
                                     <base-button size="small" type="primary">店铺设置</base-button>
                                 </navigator>
                                 <navigator url="/subPages/goods/categorizeList">

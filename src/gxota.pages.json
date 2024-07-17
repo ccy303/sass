@@ -32,6 +32,14 @@
         {
             "root": "subPages/pay",
             "pages": [{ "path": "pay", "uiTitle": "订单结算" }]
+        },
+        {
+            "root": "subPages/orders",
+            "pages": [
+                { "path": "detail", "uiTitle": "订单详情" },
+                { "path": "invoice", "uiTitle": "奈雪的茶" },
+                { "path": "review", "uiTitle": "奈雪的茶" }
+            ]
         }
     ],
     "globalStyle": {

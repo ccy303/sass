@@ -103,18 +103,18 @@ const getOrders = async (isRefresh = false) => {
 }
 const detail = (id) => {
 	uni.navigateTo({
-		url: '/pages/orders/detail?id=' + id
+		url: '/subPages/orders/detail?id=' + id
 	})
 }
 const review = (order) => {
 	const date = order.completed_time.split(' ')[0]
 	uni.navigateTo({
-		url: '/pages/review/review?storename=' + order.store.name + '&typeCate=' + order.typeCate + '&date=' + date
+		url: '/subPages/orders/review?storename=' + order.store.name + '&typeCate=' + order.typeCate + '&date=' + date
 	})
 }
 const goToInvoice = () => {
 	uni.navigateTo({
-		url: '/pages/invoice/invoice'
+		url: '/subPages/orders/invoice'
 	})
 }
 

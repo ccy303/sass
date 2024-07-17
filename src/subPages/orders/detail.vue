@@ -12,7 +12,7 @@
 								<view class="w-full flex items-center overflow-hidden">
 									<image src="/static/images/order/location.png" class="flex-shrink-0"
 										style="width: 30rpx; height: 30rpx;"></image>
-									<view class="text-truncate font-size-sm text-color-assist">{{ order.store.address }}
+									<view class="text-truncate font-size-24rpx text-color-assist">{{ order.store.address }}
 									</view>
 								</view>
 							</view>
@@ -32,7 +32,7 @@
 								:key="index">
 								<view class="flex flex-col w-60% overflow-hidden">
 									<view class="font-size-32rpx text-color-base mb-10rpx text-truncate">{{ good.name }}</view>
-									<view class="font-size-sm text-color-assist text-truncate">{{ good.property }}</view>
+									<view class="font-size-24rpx text-color-assist text-truncate">{{ good.property }}</view>
 								</view>
 								<view class="flex w-40% items-center justify-between pl-30rpx">
 									<view class="font-size-28rpx text-color-base">x{{ good.number }}</view>
@@ -65,7 +65,7 @@
 						<view class="w-full flex flex-col">
 							<view class="pay-cell">
 								<view>下单时间</view>
-								<view class="font-bold">{{ $util.formatDateTime(order.created_at) }}</view>
+								<view class="font-bold">{{ moment(order.created_at).format('YYYY-MM-DD HH:mm:ss') }}</view>
 							</view>
 							<view class="pay-cell">
 								<view>下单门店</view>
@@ -127,6 +127,7 @@
 </template>
 
 <script setup>
+import moment from 'moment'
 import Orders from '@/http/data/orders';
 import listCell from './list-cell/list-cell';
 import { onLoad } from '@dcloudio/uni-app'
@@ -140,12 +141,12 @@ onLoad(({ id }) => {
 const review = () => {
 	const date = order.value.completed_time.split(' ')[0]
 	uni.navigateTo({
-		url: '/pages/review/review?storename=' + order.value.store.name + '&typeCate=' + order.value.typeCate + '&date=' + date
+		url: '/subPages/orders/review?storename=' + order.value.store.name + '&typeCate=' + order.value.typeCate + '&date=' + date
 	})
 }
 const goToInvoice = () => {
 	uni.navigateTo({
-		url: '/pages/invoice/invoice'
+		url: '/subPages/orders/invoice'
 	})
 }
 

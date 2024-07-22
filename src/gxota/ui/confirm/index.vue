@@ -185,6 +185,9 @@
             }
         }
 
+        &__container {
+        }
+
         &__title {
             @apply font-size-16 font-bold;
         }

@@ -155,7 +155,6 @@
                     .in(proxy)
                     .select(".cui-scroller__loading")
                     .fields({ size: true }, d => {
-                        console.log(d);
                         status.value = "loading";
                         touch.move = d.height || 0;
                         emit("down");

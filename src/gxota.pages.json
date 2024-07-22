@@ -24,9 +24,10 @@
         {
             "root": "subPages/goods",
             "pages": [
-                { "path": "index", "uiTitle": "我的商品" },
-                { "path": "categorize", "uiTitle": "分类管理" },
-                { "path": "good", "uiTitle": "商品管理" }
+                { "path": "categorizeList", "uiTitle": "分类管理" },
+                { "path": "categorizeDtl", "uiTitle": "分类管理" },
+                { "path": "goodsList", "uiTitle": "商品列表" },
+                { "path": "goodsDtl", "uiTitle": "商品管理" }
             ]
         },
         {

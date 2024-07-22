@@ -60,11 +60,12 @@
         &__text {
             position: absolute;
             left: 50%;
-            padding: 0 30rpx;
+            padding: 10rpx 20rpx;
             color: $cui-color-info;
             font-size: 26rpx;
             transform: translateX(-50%);
             background-color: $cui-color-bg;
+            width: fit-content;
         }
     }
 </style>

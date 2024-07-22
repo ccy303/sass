@@ -26,7 +26,7 @@
     >
         <!-- 加载框 -->
         <div v-if="loading" mr-10 class="cui-button__loading">
-            <base-loading :size="32" :color="loadingColor" :theme="loadingTheme" v-if="loading" />
+            <base-loading :size="32" :color="loadingColor" v-if="loading" />
         </div>
         <!-- 图标 -->
         <div class="cui-button__icon" v-if="icon">

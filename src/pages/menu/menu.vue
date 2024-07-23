@@ -199,8 +199,8 @@
         </modal>
         <!-- 商品详情模态框 end -->
         <!-- 购物车详情popup -->
-        <popup-layer direction="top" :show-pop="cartPopupVisible" class="cart-popup">
-            <template v-slot:content>
+        <base-popup direction="bottom" v-model="cartPopupVisible"  class="cart-popup">
+            <!-- <template v-slot:content> -->
                 <view class="top">
                     <text @tap="handleCartClear">清空</text>
                 </view>
@@ -243,8 +243,8 @@
                         </view>
                     </view>
                 </scroll-view>
-            </template>
-        </popup-layer>
+            <!-- </template> -->
+        </base-popup>
         <!-- 购物车详情popup -->
     </view>
     <view class="loading w-full h-full flex items-center justify-center" v-else>

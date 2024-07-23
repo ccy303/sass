@@ -141,10 +141,10 @@
             <!-- 购物车栏 end -->
         </view>
         <!-- 商品详情模态框 begin -->
-        <modal :show="goodDetailModalVisible" class="good-detail-modal" color="#5A5B5C" width="90%" custom padding="0rpx" radius="12rpx">
+        <base-dialog v-model="goodDetailModalVisible" class="good-detail-modal" color="#5A5B5C" width="90%" custom padding="0rpx" radius="12rpx">
             <view class="cover">
                 <image v-if="good.images" :src="good.images" class="image"></image>
-                <view class="btn-group">
+                <view class="btn-group absolute right-10 top-0 flex items-center justify-around">
                     <image src="/static/images/menu/share-good.png"></image>
                     <image src="/static/images/menu/close.png" @tap="closeGoodDetailModal"></image>
                 </view>
@@ -196,7 +196,7 @@
             <view class="add-to-cart-btn" @tap="handleAddToCartInModal">
                 <view>加入购物车</view>
             </view>
-        </modal>
+        </base-dialog>
         <!-- 商品详情模态框 end -->
         <!-- 购物车详情popup -->
         <base-popup direction="bottom" v-model="cartPopupVisible"  class="cart-popup">
@@ -253,8 +253,8 @@
 </template>
 
 <script setup>
-import modal from "./modal/modal";
-import popupLayer from "./popup-layer/popup-layer";
+// import modal from "./modal/modal";
+// import popupLayer from "./popup-layer/popup-layer";
 // import {mapState, mapMutations, mapActions, mapGetters} from 'vuex'
 import { onLoad } from '@dcloudio/uni-app'
 import { useOrderStore } from "@/stores/order";

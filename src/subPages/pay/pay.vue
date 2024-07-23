@@ -1,5 +1,5 @@
 <template>
-	<view class="container position-relative">
+	<base-page :padding="0" class="container position-relative">
 		<view style="padding-bottom: 130rpx">
 			<view class="section-1">
 				<template v-if="orderStore.orderType == 'takein'">
@@ -151,7 +151,7 @@
 			<!-- 备注 end -->
 		</view>
 		<!-- 付款栏 begin -->
-		<view class="w-full pay-box position-fixed fixed-bottom flex items-center justify-between bg-white">
+		<view class="w-full pay-box position-fixed bottom-0 right-0 left-0 z-1030 flex items-center justify-between bg-white">
 			<view class="font-size-24rpx" style="margin-left: 20rpx">合计：</view>
 			<view class="font-size-32rpx flex-auto">￥{{ amount }}</view>
 			<view class="bg-#6b69f8 h-full flex items-center justify-center color-white font-size-28rpx"
@@ -181,7 +181,7 @@
 				<button type="primary" class="pay_btn" @tap="pay">确认并付款</button>
 			</view>
 		</modal>
-	</view>
+	</base-page>
 </template>
 <script setup>
 import listCell from "./list-cell/list-cell";

@@ -39,7 +39,8 @@
             "pages": [
                 { "path": "detail", "uiTitle": "订单详情" },
                 { "path": "invoice", "uiTitle": "奈雪的茶" },
-                { "path": "review", "uiTitle": "奈雪的茶" }
+                { "path": "review", "uiTitle": "奈雪的茶" },
+                { "path": "remark", "uiTitle": "添加备注" }
             ]
         }
     ],

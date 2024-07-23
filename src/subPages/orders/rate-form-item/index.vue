@@ -4,8 +4,8 @@
 		<view class="flex-auto flex flex-col">
 			<view class="flex items-center mb-20rpx">
 				<view class="iconfont score" v-for="(item, index) in 5" :key="index" @tap="handleScoreClick(index)"
-					:class="[value > index ? 'iconshoucangfill' : 'iconshoucang']"
-					:style="{ opacity: (value <= index) || !value ? 1 : value / 5 + 0.1 }">
+					:class="[modelValue > index ? 'iconshoucangfill' : 'iconshoucang']"
+					:style="{ opacity: (modelValue <= index) || !modelValue ? 1 : modelValue / 5 + 0.1 }">
 				</view>
 			</view>
 			<view class="font-size-28rpx text-color-base">{{ tips }}</view>
@@ -16,10 +16,10 @@
 <script setup>
 import listCell from '../list-cell/list-cell.vue'
 
-const emit = defineEmits(['input'])
+const emit = defineEmits(['update:modelValue'])
 
 const props = defineProps({
-	value: {
+	modelValue: {
 		type: Number,
 		default: 0
 	},
@@ -34,7 +34,7 @@ const props = defineProps({
 })
 
 const handleScoreClick = (index) => {
-	emit('input', index + 1)
+	emit('update:modelValue', index + 1)
 }
 </script>
 

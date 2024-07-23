@@ -1,6 +1,6 @@
 <template>
-	<view class="container">
-		<view class="orders-list flex flex-col w-full" style="padding: 20rpx; padding-bottom: 0;">
+	<base-page >
+		<view class="orders-list flex flex-col w-full" style="padding-bottom: 0;">
 			<view class="order-item" v-for="(item, index) in orders" :key="index" style="margin-bottom: 30rpx;"
 				@tap="detail(item.id)">
 				<list-cell :hover="false">
@@ -43,7 +43,7 @@
 				</list-cell>
 			</view>
 		</view>
-	</view>
+	</base-page>
 </template>
 
 <script setup>

@@ -1,5 +1,5 @@
 <template>
-	<view class="container">
+	<base-page class="container">
 		<view class="content">
 			<list-cell last class="mb-20rpx" :hover="false">
 				<view class="w-full flex justify-between items-center">
@@ -26,55 +26,47 @@
 		<view class="btn-box">
 			<button type="primary" @tap="submit">提交评论</button>
 		</view>
-	</view>
+	</base-page>
 </template>
 
-<script>
+<script setup>
 	import listCell from './list-cell/list-cell'
 	import rateFormItem from './rate-form-item'
-	
-	export default {
-		components: {
-			listCell,
-			rateFormItem
-		},
-		data() {
-			return {
-				form: {
-					score_service: 0,
-					score_order: 0,
-					score_speed: 0,
-					score_product: 0,
-					score_enviroment: 0,
-					opinion: ''
-				},
-				storename: '',
-				typeCate: 1,
-				date: ''
-			}
-		},
-		onLoad({storename, typeCate, date}) {
-			this.storename = storename
-			this.typeCate = typeCate
-			this.date = date
-		},
-		methods: {
-			submit() {
-				if(!this.form.score_service || !this.form.score_order || !this.form.score_speed || !this.form.score_product || !this.form.score_enviroment){
-					uni.showToast({
-						title: '请先选择评论内容',
-						icon: 'none'
-					})
-					return
-				}
-				
-				uni.showToast({
-					title: '提交成功'
-				})
-				
-				uni.navigateBack()
-			}
+	import { onLoad } from '@dcloudio/uni-app'
+
+	const form = ref({
+		score_service: 0,
+		score_order: 0,
+		score_speed: 0,
+		score_product: 0,
+		score_enviroment: 0,
+		opinion: ''
+	})
+
+	const storename = ref('')
+	const typeCate = ref(1)
+	const date = ref('')
+
+	onLoad(({_storename, _typeCate, _date}) => {
+		storename.value = _storename
+		typeCate.value = _typeCate
+		date.value = _date
+	}) 
+
+	const submit = () => {
+		if(!form.value.score_service || !form.value.score_order || !form.value.score_speed || !form.value.score_product || !form.value.score_enviroment){
+			uni.showToast({
+				title: '请先选择评论内容',
+				icon: 'none'
+			})
+			return
 		}
+		
+		uni.showToast({
+			title: '提交成功'
+		})
+		
+		uni.navigateBack()
 	}
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-	<view class="container">
+	<base-page class="container">
 		<view class="invoice-box-1">
 			<list-cell :hover="false" line-left line-right>
 				<view class="flex">
@@ -67,7 +67,7 @@
 			<view class="item"><button type="primary" plain>导入发票抬头</button></view>
 			<view class="item"><button type="primary">提交</button></view>
 		</view>
-	</view>
+	</base-page>
 </template>
 
 <script setup>

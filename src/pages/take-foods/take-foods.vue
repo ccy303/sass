@@ -1,5 +1,5 @@
 <template>
-  <view class="container">
+  <base-page class="container">
     <div v-if="!Object.keys(order).length" class="flex w-full h-full flex-col justify-center items-center bg-white">
       <image src="/static/images/loading.gif" class="drinks-img"></image>
       <view class="tips flex flex-col items-center font-size-28rpx text-color-assist">
@@ -172,7 +172,7 @@
         </view>
       </view>
     </template>
-  </view>
+  </base-page>
 </template>
 
 <script setup>

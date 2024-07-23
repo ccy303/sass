@@ -1,5 +1,5 @@
 <template>
-	<view class="container" style="padding:20rpx;">
+	<base-page class="container" style="padding:20rpx;">
 		<view style="padding-bottom: 100rpx;">
 			<view class="bg-white">
 				<view class="section">
@@ -123,7 +123,7 @@
 			<view class="item"><button type="primary" plain @tap="review">去评价</button></view>
 			<view class="item"><button type="primary">再来一单</button></view>
 		</view>
-	</view>
+	</base-page>
 </template>
 
 <script setup>

@@ -1,20 +1,20 @@
 <template>
-    <view class="container" v-if="!loading">
-        <view class="main" v-if="goods.length">
-            <view class="nav">
-                <view class="header">
-                    <view class="left" v-if="orderStore.orderType == 'takein'">
-                        <view class="store-name">
+    <view class="container relative overflow-hidden" v-if="!loading">
+        <view class="main w-full h-full relative flex flex-col" v-if="goods.length">
+            <view class="nav w-full h-212rpx flex-shrink-0 flex flex-col">
+                <view class="header w-full flex items-center justify-between p-20rpx bg-#fffff h-140rpx">
+                    <view class="left flex-1 flex flex-col" v-if="orderStore.orderType == 'takein'">
+                        <view class="store-name flex justify-start items-center font-size-4 mb-10rpx">
                             <text>{{ orderStore.store.name }}</text>
-                            <view class="iconfont iconarrow-right"></view>
+                            <view class="iconfont iconarrow-right ml-10rpx line-height-100%"></view>
                         </view>
-                        <view class="store-location">
+                        <view class="store-location flex justify-start items-center c-#919293 font-size-24rpx">
                             <image src="/static/images/order/location.png" style="width: 30rpx; height: 30rpx" class="mr-10"></image>
                             <text>距离您 {{ orderStore.store.distance_text }}</text>
                         </view>
                     </view>
                     <view class="left overflow-hidden" v-else>
-                        <view class="d-flex align-items-center overflow-hidden">
+                        <view class="flex items-center overflow-hidden">
                             <image src="/static/images/order/location.png" style="width: 30rpx; height: 30rpx" class="mr-10"></image>
                             <view class="font-size-extra-lg text-color-base font-weight-bold text-truncate">
                                 {{ orderStore.address.street }}
@@ -39,11 +39,11 @@
                     <view class="iconfont iconarrow-right"></view>
                 </view>
             </view>
-            <view class="content">
-                <scroll-view class="menus" :scroll-into-view="menuScrollIntoView" scroll-with-animation scroll-y>
-                    <view class="wrapper">
+            <view class="content flex-1 overflow-hidden w-full flex">
+                <scroll-view class="menus w-200rpx h-full overflow-hidden bg-#f5f5f5" :scroll-into-view="menuScrollIntoView" scroll-with-animation scroll-y>
+                    <view class="wrapper w-full h-full">
                         <view
-                            class="menu"
+                            class="menu flex items-center justify-start py-30rpx px-20rpx font-size-26rpx c-#919293 relative"
                             :id="`menu-${item.id}`"
                             :class="{ current: item.id === currentCateId }"
                             v-for="(item, index) in goods"
@@ -51,30 +51,30 @@
                             @tap="handleMenuTap(item.id)"
                         >
                             <text>{{ item.name }}</text>
-                            <view class="dot" v-show="menuCartNum(item.id)">{{ menuCartNum(item.id) }}</view>
+                            <view class="dot absolute w-34rpx h-34rpx line-height-34rpx font-size-22rpx bg-#6b69f8 c-#ffffff top-16rpx right-10rpx b-rd-100% text-align-center" v-show="menuCartNum(item.id)">{{ menuCartNum(item.id) }}</view>
                         </view>
                     </view>
                 </scroll-view>
                 <!-- goods list begin -->
-                <scroll-view class="goods" scroll-with-animation scroll-y :scroll-top="cateScrollTop" @scroll="handleGoodsScroll">
-                    <view class="wrapper">
+                <scroll-view class="goods flex-1 h-full overflow-hidden bg-#ffffff" scroll-with-animation scroll-y :scroll-top="cateScrollTop" @scroll="handleGoodsScroll">
+                    <view class="wrapper w-full h-full p-20rpx">
                         <swiper class="ads" id="ads" autoplay :interval="3000" indicator-dots>
                             <swiper-item v-for="(item, index) in ads" :key="index">
-                                <image :src="item.image"></image>
+                                <image class="w-full h-full b-rd-8rpx" :src="item.image"></image>
                             </swiper-item>
                         </swiper>
-                        <view class="list">
+                        <view class="list w-full font-size-28rpx pb-120rpx">
                             <!-- category begin -->
-                            <view class="category" v-for="(item, index) in goods" :key="index" :id="`cate-${item.id}`">
-                                <view class="title">
+                            <view class="category w-full" v-for="(item, index) in goods" :key="index" :id="`cate-${item.id}`">
+                                <view class="title py-30rpx px-0 flex items-center c-#5a5b5c">
                                     <text>{{ item.name }}</text>
-                                    <image :src="item.icon" class="icon"></image>
+                                    <image :src="item.icon" class="icon w-38rpx h-38rpx ml-10rpx"></image>
                                 </view>
-                                <view class="items">
+                                <view class="items flex flex-col pb--30rpx">
                                     <!-- 商品 begin -->
-                                    <view class="good" v-for="(_good, key) in item.goods_list" :key="key">
-                                        <image :src="_good.images" class="image" @tap="showGoodDetailModal(item, _good)"></image>
-                                        <view class="right">
+                                    <view class="good flex items-center mb-30rpx" v-for="(_good, key) in item.goods_list" :key="key">
+                                        <image :src="_good.images" class="image w-160rpx h-160rpx mr-20rpx b-rd-4" @tap="showGoodDetailModal(item, _good)"></image>
+                                        <view class="right flex-1 h-160rpx overflow-hidden flex flex-col items-start justify-between pr-14rpx">
                                             <text class="name">{{ _good.name }}</text>
                                             <text class="tips">{{ _good.content }}</text>
                                             <view class="price_and_action">
@@ -247,8 +247,8 @@
         </popup-layer>
         <!-- 购物车详情popup -->
     </view>
-    <view class="loading" v-else>
-        <image src="/static/images/loading.gif"></image>
+    <view class="loading w-full h-full flex items-center justify-center" v-else>
+        <image class="w-260rpx h-260rpx relative mt--200rpx" src="/static/images/loading.gif"></image>
     </view>
 </template>
 

@@ -1,12 +1,16 @@
 <template>
     <base-page :padding="20">
-        <div class="bg-#fff p-10">
+        <div class="p-10">
             <base-form ref="Form" v-model="form" :disabled="loading" label-position="left">
                 <base-form-item label="摊位名称" prop="shopName" required>
                     <base-input v-model="form.shopName" placeholder="请填写分类名称"></base-input>
                 </base-form-item>
-
                 <base-divider>模块配置</base-divider>
+                <div v-for="(item, idx) in modules" :key="item.id" :style="{ marginBottom: idx == modules.length - 1 ? '50px' : '' }">
+                    <base-card :label="item.title">
+                        <base-upload :limit="1"> </base-upload>
+                    </base-card>
+                </div>
             </base-form>
         </div>
 
@@ -62,7 +66,7 @@
 
     const getModules = async () => {
         const data = await getAdminShopModules({ shopId: form.value.id });
-        console.log(data);
+        modules.value = data;
     };
 
     onLoad(options => {

@@ -35,3 +35,8 @@ export const deleteGood = data => {
 export const submitGood = data => {
     return request.post({ url: `${import.meta.env.VITE_BASE_URL}/blade-mall/goods/submit`, data });
 };
+
+export const getCategoryHomeList = data => {
+    return request.get({ url: `${import.meta.env.VITE_BASE_URL}/blade-mall/category/home/list`, data });
+};
+

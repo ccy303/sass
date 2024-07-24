@@ -1,9 +1,11 @@
 <script setup>
     import { onLaunch } from "@dcloudio/uni-app";
     import { useUserStore } from "@/stores/user";
+    import { useCommonStore } from "@/stores/common";
     import { login } from "@/http/user";
 
     const userStore = useUserStore();
+    const commonStore = useCommonStore();
 
     // #ifndef H5
     uni.showShareMenu({});
@@ -19,6 +21,10 @@
         userStore.setToken(access_token);
         userStore.setUser(other);
     })();
+
+    onLaunch(options => {
+        commonStore.setShopTenantId(options.query.shopTenantId);
+    });
 </script>
 
 <style lang="scss">

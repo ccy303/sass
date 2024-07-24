@@ -1,11 +1,12 @@
 import { logRequest, logReponse } from "./logger";
 import { encryptBase64, encryptWithAes, generateAesKey, decryptWithAes, decryptBase64 } from "@/utils/crypto";
 import { encrypt, decrypt } from "@/utils/jsencrypt";
+import { useCommonStore } from "@/stores/common";
 
 const request = async (options, errToast = true) => {
-    const accessToken = uni.getStorageSync("accessToken");
+    const { shopTenantId } = useCommonStore();
 
-    const { tenant_id } = (await uni.getStorageSync("accountInfo")) || {};
+    const accessToken = uni.getStorageSync("accessToken");
 
     const config = { ...options };
 
@@ -13,7 +14,7 @@ const request = async (options, errToast = true) => {
 
     const headers = {
         Authorization: "Basic c3dvcmQ6c3dvcmRfc2VjcmV0",
-        "Tenant-Id": tenant_id || "000000",
+        "Tenant-Id": shopTenantId,
         ...config.header
     };
 

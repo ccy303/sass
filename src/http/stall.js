@@ -1,17 +1,37 @@
 import request from "./request";
 
 export const create = data => {
-    return request.post({ url: `${import.meta.env.VITE_BASE_URL}/blade-mall/shop/save`, data });
+    const { tenant_id } = uni.getStorageSync("accountInfo");
+    return request.post({
+        url: `${import.meta.env.VITE_BASE_URL}/blade-mall/shop/save`,
+        data,
+        header: { "Tenant-Id": tenant_id }
+    });
 };
 
 export const list = data => {
-    return request.get({ url: `${import.meta.env.VITE_BASE_URL}/blade-mall/shop/list`, data });
+    const { tenant_id } = uni.getStorageSync("accountInfo");
+    return request.get({
+        url: `${import.meta.env.VITE_BASE_URL}/blade-mall/shop/list`,
+        data,
+        header: { "Tenant-Id": tenant_id }
+    });
 };
 
 export const dtl = data => {
-    return request.get({ url: `${import.meta.env.VITE_BASE_URL}/blade-mall/shop/detail`, data });
+    const { tenant_id } = uni.getStorageSync("accountInfo");
+    return request.get({
+        url: `${import.meta.env.VITE_BASE_URL}/blade-mall/shop/detail`,
+        data,
+        header: { "Tenant-Id": tenant_id }
+    });
 };
 
 export const getAdminShopModules = data => {
-    return request.get({ url: `${import.meta.env.VITE_BASE_URL}/blade-mall/homepagemodules/getModules`, data });
+    const { tenant_id } = uni.getStorageSync("accountInfo");
+    return request.get({
+        url: `${import.meta.env.VITE_BASE_URL}/blade-mall/homepagemodules/getModules`,
+        data,
+        header: { "Tenant-Id": tenant_id }
+    });
 };

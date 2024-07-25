@@ -1,12 +1,10 @@
 import { logRequest, logReponse } from "./logger";
 import { encryptBase64, encryptWithAes, generateAesKey, decryptWithAes, decryptBase64 } from "@/utils/crypto";
 import { encrypt, decrypt } from "@/utils/jsencrypt";
-import { useCommonStore } from "@/stores/common";
 
 const request = async (options, errToast = true) => {
-    const { shopTenantId } = useCommonStore();
-
     const accessToken = uni.getStorageSync("accessToken");
+    const shopTenantId = uni.getStorageSync("shopTenantId");
 
     const config = { ...options };
 

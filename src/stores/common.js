@@ -5,6 +5,7 @@ export const useCommonStore = defineStore("commonStore", () => {
 
     const setShopTenantId = id => {
         shopTenantId.value = id;
+        uni.setStorageSync("shopTenantId", id);
     };
 
     return { shopTenantId, setShopTenantId };

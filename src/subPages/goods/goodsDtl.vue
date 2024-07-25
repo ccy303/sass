@@ -1,6 +1,6 @@
 <template>
     <base-page :padding="20">
-        <div class="bg-#fff p-10">
+        <div class="bg-#fff p-10 mb-30">
             <base-form ref="Form" :labelWidth="180" v-model="form" :rules="rules" :disabled="loading" label-position="left">
                 <base-form-item label="商品分类" prop="categories.ids" required>
                     <base-select-popup v-model="form.categories.ids" multiple :options="categoryList" />
@@ -190,6 +190,8 @@
                         name: attrs.value.name,
                         attrOptions: attrs.value.attrOptions.map(item => ({ ...item, discountPrice: (item.discountPrice || 0) * 100 }))
                     });
+
+                    allAttrs.value = form.value.attrs;
                 }
 
                 done();

@@ -4,8 +4,7 @@ import { encrypt, decrypt } from "@/utils/jsencrypt";
 
 const request = async (options, errToast = true) => {
     const accessToken = uni.getStorageSync("accessToken");
-
-    const { tenant_id } = (await uni.getStorageSync("accountInfo")) || {};
+    const shopTenantId = uni.getStorageSync("shopTenantId");
 
     const config = { ...options };
 
@@ -13,7 +12,7 @@ const request = async (options, errToast = true) => {
 
     const headers = {
         Authorization: "Basic c3dvcmQ6c3dvcmRfc2VjcmV0",
-        "Tenant-Id": tenant_id || "000000",
+        "Tenant-Id": shopTenantId,
         ...config.header
     };
 

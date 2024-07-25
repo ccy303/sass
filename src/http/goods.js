@@ -1,39 +1,82 @@
 import request from "./request";
 
 export const submitCategory = data => {
-    return request.post({ url: `${import.meta.env.VITE_BASE_URL}/blade-mall/category/save`, data });
+    const { tenant_id } = uni.getStorageSync("accountInfo");
+    return request.post({
+        url: `${import.meta.env.VITE_BASE_URL}/blade-mall/category/save`,
+        data,
+        header: { "Tenant-Id": tenant_id }
+    });
 };
 
 export const getCategoryList = data => {
-    return request.get({ url: `${import.meta.env.VITE_BASE_URL}/blade-mall/category/list`, data });
+    const { tenant_id } = uni.getStorageSync("accountInfo");
+    return request.get({
+        url: `${import.meta.env.VITE_BASE_URL}/blade-mall/category/list`,
+        data,
+        header: { "Tenant-Id": tenant_id }
+    });
 };
 
 export const deleteCategory = data => {
-    return request.post({ url: `${import.meta.env.VITE_BASE_URL}/blade-mall/category/remove?ids=${data.join(",")}` });
+    const { tenant_id } = uni.getStorageSync("accountInfo");
+    return request.post({
+        url: `${import.meta.env.VITE_BASE_URL}/blade-mall/category/remove?ids=${data.join(",")}`,
+        header: { "Tenant-Id": tenant_id }
+    });
 };
 
 export const updateCategory = data => {
-    return request.post({ url: `${import.meta.env.VITE_BASE_URL}/blade-mall/category/update`, data });
+    const { tenant_id } = uni.getStorageSync("accountInfo");
+    return request.post({
+        url: `${import.meta.env.VITE_BASE_URL}/blade-mall/category/update`,
+        data,
+        header: { "Tenant-Id": tenant_id }
+    });
 };
 
 export const getCategory = data => {
-    return request.get({ url: `${import.meta.env.VITE_BASE_URL}/blade-mall/category/detail`, data });
+    const { tenant_id } = uni.getStorageSync("accountInfo");
+    return request.get({
+        url: `${import.meta.env.VITE_BASE_URL}/blade-mall/category/detail`,
+        data,
+        header: { "Tenant-Id": tenant_id }
+    });
 };
 
 export const getGoodList = data => {
-    return request.get({ url: `${import.meta.env.VITE_BASE_URL}/blade-mall/goods/page`, data });
+    const { tenant_id } = uni.getStorageSync("accountInfo");
+    return request.get({
+        url: `${import.meta.env.VITE_BASE_URL}/blade-mall/goods/page`,
+        data,
+        header: { "Tenant-Id": tenant_id }
+    });
 };
 
 export const getGood = data => {
-    return request.get({ url: `${import.meta.env.VITE_BASE_URL}/blade-mall/goods/detail`, data });
+    const { tenant_id } = uni.getStorageSync("accountInfo");
+    return request.get({
+        url: `${import.meta.env.VITE_BASE_URL}/blade-mall/goods/detail`,
+        data,
+        header: { "Tenant-Id": tenant_id }
+    });
 };
 
 export const deleteGood = data => {
-    return request.post({ url: `${import.meta.env.VITE_BASE_URL}/blade-mall/goods/remove?ids=${data.join(",")}` });
+    const { tenant_id } = uni.getStorageSync("accountInfo");
+    return request.post({
+        url: `${import.meta.env.VITE_BASE_URL}/blade-mall/goods/remove?ids=${data.join(",")}`,
+        header: { "Tenant-Id": tenant_id }
+    });
 };
 
 export const submitGood = data => {
-    return request.post({ url: `${import.meta.env.VITE_BASE_URL}/blade-mall/goods/submit`, data });
+    const { tenant_id } = uni.getStorageSync("accountInfo");
+    return request.post({
+        url: `${import.meta.env.VITE_BASE_URL}/blade-mall/goods/submit`,
+        data,
+        header: { "Tenant-Id": tenant_id }
+    });
 };
 
 export const getCategoryHomeList = data => {

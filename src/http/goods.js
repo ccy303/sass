@@ -78,3 +78,8 @@ export const submitGood = data => {
         header: { "Tenant-Id": tenant_id }
     });
 };
+
+export const getCategoryHomeList = data => {
+    return request.get({ url: `${import.meta.env.VITE_BASE_URL}/blade-mall/category/home/list`, data });
+};
+

@@ -12,7 +12,6 @@
         { "path": "pages/tour/index", "style": {} },
         { "path": "pages/menu/menu", "style": {} },
         { "path": "pages/take-foods/take-foods", "style": {} },
-        { "path": "pages/orders/orders", "style": {} },
         { "path": "pages/mine/index", "style": {} }
     ],
     "subPackages": [
@@ -36,6 +35,7 @@
         {
             "root": "subPages/orders",
             "pages": [
+                { "path": "orders", "uiTitle": "订单列表" },
                 { "path": "detail", "uiTitle": "订单详情" },
                 { "path": "invoice", "uiTitle": "奈雪的茶" },
                 { "path": "review", "uiTitle": "奈雪的茶" },

@@ -41,6 +41,13 @@
                 { "path": "review", "uiTitle": "奈雪的茶" },
                 { "path": "remark", "uiTitle": "添加备注" }
             ]
+        },
+        {
+            "root": "subPages/packages",
+            "pages": [
+                { "path": "index", "uiTitle": "券包列表" },
+                { "path": "detail", "uiTitle": "券包详情" }
+            ]
         }
     ],
     "globalStyle": {

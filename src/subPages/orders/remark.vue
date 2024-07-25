@@ -1,5 +1,5 @@
 <template>
-	<view class="container w-full h-full overflow-hidden">
+	<base-page class="container w-full h-full overflow-hidden">
 		<view class="textarea">
 			<textarea placeholder-class="text-color-assist font-size-28rpx" v-model="remark"
 				class="bg-white w-full box-border font-size-28rpx remark"
@@ -20,41 +20,40 @@
 		<view class="flex just-center items-center" style="margin-top: 60rpx;">
 			<button type="primary" class="submit-btn font-size-28rpx" @tap="submit">完成</button>
 		</view>
-	</view>
+	</base-page>
 </template>
 
-<script>
-	export default {
-		data() {
-			return {
-				remark: '',
-				quickInputs: [
-					'请放门把手上', '请放门口', '请放前台桌上', '如地址封闭管理，请电话与我联系'
-				]
-			}
-		},
-		onLoad({remark}) {
-			this.remark = remark
-		},
-		computed: {
-			remarkLength() {
-				return this.remark.length
-			},
-			isDanger() {
-				return this.remark.length > 50
-			}
-		},
-		methods: {
-			handleQuickInput(item) {
-				this.remark = this.remark.concat(" ", item)
-			},
-			submit() {
-				uni.navigateTo({
-					url: "/pages/pay/pay?remark=" + this.remark
-				})
-			}
-		}
-	}
+<script setup>
+import { onLoad } from '@dcloudio/uni-app'
+
+const remark = ref('')
+const quickInputs = ref([
+	'请放门把手上', '请放门口', '请放前台桌上', '如地址封闭管理，请电话与我联系'
+])
+
+
+onLoad((option) => {
+	remark.value = option.remark
+})
+
+const remarkLength = computed(() => {
+	return remark.value.length
+})
+
+const isDanger = computed(() => {
+	return remark.value.length > 50
+})
+
+const handleQuickInput = (item) => {
+	remark.value = remark.value.concat(" ", item)
+}
+
+const submit = () => {
+	uni.navigateTo({
+		url: "/subPages/pay/pay?remark=" + remark.value
+	})
+}
+
 </script>
 
 <style lang="scss" scoped>

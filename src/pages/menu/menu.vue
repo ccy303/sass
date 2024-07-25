@@ -1,5 +1,5 @@
 <template>
-    <view class="container relative overflow-hidden" v-if="!loading">
+    <view class="container relative overflow-hidden pt-162rpx bg-white" v-if="!loading">
         <view class="main w-full h-full relative flex flex-col" v-if="goods.length">
             <view class="nav w-full h-212rpx flex-shrink-0 flex flex-col">
                 <view class="header w-full flex items-center justify-between p-20rpx bg-#fffff h-140rpx">
@@ -58,11 +58,11 @@
                 <!-- goods list begin -->
                 <scroll-view class="goods flex-1 h-full overflow-hidden bg-#ffffff" scroll-with-animation scroll-y :scroll-top="cateScrollTop" @scroll="handleGoodsScroll">
                     <view class="wrapper w-full h-full p-20rpx">
-                        <swiper class="ads" id="ads" autoplay :interval="3000" indicator-dots>
+                        <!-- <swiper class="ads" id="ads" autoplay :interval="3000" indicator-dots>
                             <swiper-item v-for="(item, index) in ads" :key="index">
                                 <image class="w-full h-full b-rd-8rpx" :src="item.image"></image>
                             </swiper-item>
-                        </swiper>
+                        </swiper> -->
                         <view class="list w-full font-size-28rpx pb-120rpx">
                             <!-- category begin -->
                             <view class="category w-full" v-for="(item, index) in goods" :key="index" :id="`cate-${item.id}`">
@@ -78,7 +78,7 @@
                                             <text class="name">{{ _good.name }}</text>
                                             <text class="tips">{{ _good.content }}</text>
                                             <view class="price_and_action">
-                                                <text class="price">￥{{ _good.originalPrice }}</text>
+                                                <text class="price">￥{{ _good.originalPrice / 100 }}</text>
                                                 <view class="btn-group" v-if="_good.use_property">
                                                     <button
                                                         type="primary"
@@ -178,7 +178,7 @@
             </scroll-view>
             <view class="action flex items-center justify-between bg-#f5f5f5 h-120rpx px-26rpx">
                 <view class="left flex-1 flex flex-col justify-center mr-20rpx overflow-hidden">
-                    <view class="price font-size-32rpx c-#5a5b5c">￥{{ good.originalPrice }}</view>
+                    <view class="price font-size-32rpx c-#5a5b5c">￥{{ good.originalPrice / 100 }}</view>
                     <view class="props font-size-24rpx w-full overflow-hidden text-ellipsis whitespace-nowrap" v-if="getGoodSelectedProps(good)">
                         {{ getGoodSelectedProps(good) }}
                     </view>
@@ -331,7 +331,7 @@ const init = async () => {
     //页面初始化
     loading.value = true;
     await orderStore.getStore();
-    goods.value = await $api("goods");
+    // goods.value = await $api("goods");
     try {
         const res = await getCategoryHomeList()
         goods.value = res || []
@@ -355,9 +355,9 @@ const takout = () => {
 };
 const handleMenuTap = id => {
     //点击菜单项事件
-    if (!sizeCalcState.value) {
-        calcSize();
-    }
+    // if (!sizeCalcState.value) {
+    //     calcSize();
+    // }
 
     currentCateId.value = id;
     nextTick(() => {
@@ -367,9 +367,9 @@ const handleMenuTap = id => {
 const handleGoodsScroll = ({ detail }) => {
 
     //商品列表滚动事件
-    if (!sizeCalcState.value) {
-        calcSize();
-    }
+    // if (!sizeCalcState.value) {
+    //     calcSize();
+    // }
     const { scrollTop } = detail;
     let tabs = goods.value.filter(item => item.top <= scrollTop).reverse();
     if (tabs.length > 0) {
@@ -420,7 +420,7 @@ const handleAddToCart = (cate, good, num) => {
             id: good.id,
             cate_id: cate.id,
             name: good.name,
-            price: good.originalPrice,
+            price: good.originalPrice / 100,
             number: num,
             image: good.images,
             use_property: good.use_property,

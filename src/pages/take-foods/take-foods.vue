@@ -191,7 +191,7 @@ const orders = () => {
   //   return;
   // }
   uni.navigateTo({
-    url: "/subpages/orders/orders",
+    url: "/subPages/orders/orders",
   });
 }
 const menu = () => {

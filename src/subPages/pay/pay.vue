@@ -160,7 +160,7 @@
 			</view>
 		</view>
 		<!-- 付款栏 end -->
-		<modal :show="ensureAddressModalVisible" custom :mask-closable="false" :radius="0" width="90%">
+		<base-dialog v-model="ensureAddressModalVisible" custom :mask-closable="false" :radius="0" width="90%">
 			<view class="modal-content">
 				<view class="flex justify-end">
 					<image src="/static/images/pay/close.png" style="width: 40rpx; height: 40rpx"
@@ -180,12 +180,12 @@
 				</view>
 				<button type="primary" class="pay_btn" @tap="pay">确认并付款</button>
 			</view>
-		</modal>
+		</base-dialog>
 	</base-page>
 </template>
 <script setup>
 import listCell from "./list-cell/list-cell";
-import modal from "@/pages/menu/modal/modal";
+// import modal from "@/pages/menu/modal/modal";
 import orders from "@/http/data/orders";
 import { useOrderStore } from "@/stores/order";
 import { onLoad } from "@dcloudio/uni-app";
@@ -213,7 +213,7 @@ onLoad(async option => {
 
 const goToRemark = () => {
 	uni.navigateTo({
-		url: "/pages/remark/remark?remark=" + form.remark
+		url: "/subPages/orders/remark?remark=" + form.remark
 	});
 };
 const chooseAddress = () => {
@@ -223,7 +223,7 @@ const chooseAddress = () => {
 };
 const goToPackages = () => {
 	uni.navigateTo({
-		url: "/pages/packages/index"
+		url: "/subPages/packages/index"
 	});
 };
 const submit = () => {

@@ -72,13 +72,13 @@
                                 </view>
                                 <view class="items flex flex-col pb--30rpx">
                                     <!-- 商品 begin -->
-                                    <view class="good flex items-center mb-30rpx" v-for="(_good, key) in item.goods_list" :key="key">
+                                    <view class="good flex items-center mb-30rpx" v-for="(_good, key) in item.goods" :key="key">
                                         <image :src="_good.images" class="image w-160rpx h-160rpx mr-20rpx b-rd-4" @tap="showGoodDetailModal(item, _good)"></image>
                                         <view class="right flex-1 h-160rpx overflow-hidden flex flex-col items-start justify-between pr-14rpx">
                                             <text class="name">{{ _good.name }}</text>
                                             <text class="tips">{{ _good.content }}</text>
                                             <view class="price_and_action">
-                                                <text class="price">￥{{ _good.price }}</text>
+                                                <text class="price">￥{{ _good.originalPrice }}</text>
                                                 <view class="btn-group" v-if="_good.use_property">
                                                     <button
                                                         type="primary"
@@ -178,7 +178,7 @@
             </scroll-view>
             <view class="action flex items-center justify-between bg-#f5f5f5 h-120rpx px-26rpx">
                 <view class="left flex-1 flex flex-col justify-center mr-20rpx overflow-hidden">
-                    <view class="price font-size-32rpx c-#5a5b5c">￥{{ good.price }}</view>
+                    <view class="price font-size-32rpx c-#5a5b5c">￥{{ good.originalPrice }}</view>
                     <view class="props font-size-24rpx w-full overflow-hidden text-ellipsis whitespace-nowrap" v-if="getGoodSelectedProps(good)">
                         {{ getGoodSelectedProps(good) }}
                     </view>
@@ -331,13 +331,13 @@ const init = async () => {
     //页面初始化
     loading.value = true;
     await orderStore.getStore();
-    // goods.value = await $api("goods");
-    // try {
-    //     const res = await getCategoryHomeList()
-    //     console.log(res, '--------------------')
-    // } catch (error) {
-        
-    // }
+    goods.value = await $api("goods");
+    try {
+        const res = await getCategoryHomeList()
+        goods.value = res || []
+    } catch (error) {
+        console.log(error)
+    }
     loading.value = false;
     cart.value = uni.getStorageSync("cart") || [];
 };
@@ -420,7 +420,7 @@ const handleAddToCart = (cate, good, num) => {
             id: good.id,
             cate_id: cate.id,
             name: good.name,
-            price: good.price,
+            price: good.originalPrice,
             number: num,
             image: good.images,
             use_property: good.use_property,

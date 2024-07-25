@@ -121,7 +121,7 @@
 
 <style lang="scss">
     .cui-toast {
-        @apply inline-flex flex-col items-center justify-center border-rd-13 p-20 max-w-80% color-#fff line-height-1;
+        @apply inline-flex flex-col items-center justify-center border-rd-13 p-20 color-#fff line-height-1;
 
         background-color: rgba(50, 50, 50, 0.9);
 

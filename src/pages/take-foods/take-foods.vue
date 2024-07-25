@@ -181,7 +181,6 @@ import { useOrderStore } from "@/stores/order";
 
 
 const orderStore = useOrderStore();
-
 const order = computed(() => {
   return orderStore.order
 })
@@ -192,7 +191,7 @@ const orders = () => {
   //   return;
   // }
   uni.navigateTo({
-    url: "/pages/orders/orders",
+    url: "/subpages/orders/orders",
   });
 }
 const menu = () => {
@@ -203,38 +202,6 @@ const menu = () => {
 
 </script>
 
-<!-- <script>
-import listCell from "@/components/list-cell/list-cell";
-import { mapState } from "vuex";
-
-export default {
-  components: {
-    listCell,
-  },
-  data() {
-    return {};
-  },
-  computed: {
-    ...mapState(["order"]),
-  },
-  methods: {
-    orders() {
-      if (!this.$store.getters.isLogin) {
-        uni.navigateTo({ url: "/pages/login/login" });
-        return;
-      }
-      uni.navigateTo({
-        url: "/pages/orders/orders",
-      });
-    },
-    menu() {
-      uni.switchTab({
-        url: "/pages/menu/menu",
-      });
-    },
-  },
-};
-</script> -->
 
 <style lang="scss" scoped>
 /* #ifdef H5 */

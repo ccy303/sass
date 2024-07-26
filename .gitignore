@@ -21,3 +21,6 @@ dist
 *.sw?
 
 pnpm-lock.yaml
+
+
+src/pages.json

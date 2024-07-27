@@ -18,6 +18,11 @@
         }
         const { access_token, ...other } = await login(code);
 
+        setTimeout(() => {
+            uni.switchTab({ url: "/pages/home/index" });
+        },2500);
+
+        commonStore.setLoaded();
         userStore.setToken(access_token);
         userStore.setUser(other);
     })();
@@ -30,7 +35,7 @@
 <style lang="scss">
     /*每个页面公共css */
     page {
-        background-color: #f5f1e6;
+        background-color: #f1f8fa;
         background-repeat: no-repeat;
         min-height: 100vh;
         width: 100vw;

@@ -4,8 +4,6 @@ import App from "./App.vue";
 
 import "virtual:uno.css";
 
-import { ctx } from "virtual:ctx";
-
 export const createApp = () => {
     const app = createSSRApp(App);
 

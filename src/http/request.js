@@ -5,6 +5,7 @@ import { encrypt, decrypt } from "@/utils/jsencrypt";
 const request = async (options, errToast = true) => {
     const accessToken = uni.getStorageSync("accessToken");
     const shopTenantId = uni.getStorageSync("shopTenantId");
+    console.log(111111, shopTenantId);
 
     const config = { ...options };
 

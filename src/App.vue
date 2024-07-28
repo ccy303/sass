@@ -4,31 +4,34 @@
     import { useCommonStore } from "@/stores/common";
     import { login } from "@/http/user";
 
+    import { getHomePageModules } from "@/http/stall";
+
     const userStore = useUserStore();
     const commonStore = useCommonStore();
+    const shopId = ref(null);
 
     // #ifndef H5
     uni.showShareMenu({});
     // #endif
 
-    (async () => {
+    onLaunch(async options => {
+        commonStore.setShopTenantId(options.query.shopTenantId);
+        commonStore.setShopId(options.query.shopId);
+        commonStore.setDeskNo(options.query.deskNo);
+        shopId.value = options.query.shopId;
+
         const { code } = await uni.login();
         if (!code) {
             return;
         }
         const { access_token, ...other } = await login(code);
 
-        setTimeout(() => {
-            uni.switchTab({ url: "/pages/home/index" });
-        },2500);
-
-        commonStore.setLoaded();
         userStore.setToken(access_token);
         userStore.setUser(other);
-    })();
-
-    onLaunch(options => {
-        commonStore.setShopTenantId(options.query.shopTenantId);
+        
+        const data = await getHomePageModules({ shopId: options.query.shopId });
+        commonStore.setHomeModules(data);
+        commonStore.setLoaded();
     });
 </script>
 

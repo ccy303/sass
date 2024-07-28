@@ -6,7 +6,19 @@
     </base-page>
 </template>
 
-<script setup></script>
+<script setup>
+    import { useCommonStore } from "@/stores/common";
+    import { storeToRefs } from "pinia";
+
+    const { loaded } = storeToRefs(useCommonStore());
+
+    watch(loaded, val => {
+        val &&
+            setTimeout(() => {
+                uni.switchTab({ url: "/pages/home/index" });
+            }, 2000);
+    });
+</script>
 
 <style lang="scss" scoped>
     .logo {

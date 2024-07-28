@@ -35,3 +35,19 @@ export const getAdminShopModules = data => {
         header: { "Tenant-Id": tenant_id }
     });
 };
+
+export const saveAdminShopModules = data => {
+    const { tenant_id } = uni.getStorageSync("accountInfo");
+    return request.post({
+        url: `${import.meta.env.VITE_BASE_URL}/blade-mall/homepagemodules/saveOrUpdateModules`,
+        data,
+        header: { "Tenant-Id": tenant_id }
+    });
+};
+
+export const getHomePageModules = data => {
+    return request.get({
+        url: `${import.meta.env.VITE_BASE_URL}/blade-mall/homepagemodules/getModules`,
+        data
+    });
+};

@@ -3,9 +3,16 @@ import { defineStore } from "pinia";
 export const useCommonStore = defineStore("commonStore", () => {
     const shopTenantId = ref(null);
     const loaded = ref(false);
+    const homeModules = ref(null);
+    const shopId = ref(null);
+    const deskNo = ref(null);
 
     const setLoaded = () => {
         loaded.value = true;
+    };
+
+    const setHomeModules = modules => {
+        homeModules.value = modules;
     };
 
     const setShopTenantId = id => {
@@ -13,5 +20,15 @@ export const useCommonStore = defineStore("commonStore", () => {
         uni.setStorageSync("shopTenantId", id);
     };
 
-    return { shopTenantId, setShopTenantId, setLoaded };
+    const setShopId = id => {
+        shopId.value = id;
+        uni.setStorageSync("shopId", id);
+    };
+
+    const setDeskNo = id => {
+        deskNo.value = id;
+        uni.setStorageSync("deskNo", id);
+    };
+
+    return { shopId, shopTenantId, loaded, homeModules, setShopTenantId, setLoaded, setHomeModules, setShopId, setDeskNo };
 });

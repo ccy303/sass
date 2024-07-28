@@ -9,6 +9,14 @@
                 <div v-for="(item, idx) in modules" :key="item.id" :style="{ marginBottom: idx == modules.length - 1 ? '50px' : '' }">
                     <base-card :label="item.title">
                         <base-upload :limit="1"> </base-upload>
+                        <template #footer>
+                            <div>
+                                <base-switch 
+                                :activeValue="1"
+                                :inactiveValue="0"
+                                v-model="item.status"></base-switch>
+                            </div>
+                        </template>
                     </base-card>
                 </div>
             </base-form>
@@ -24,7 +32,7 @@
 <script setup>
     import { onLoad } from "@dcloudio/uni-app";
     import { beTenant } from "@/http/user";
-    import { create, dtl, getAdminShopModules } from "@/http/stall";
+    import { create, dtl, getAdminShopModules, saveAdminShopModules } from "@/http/stall";
     import { useUi } from "@/gxota/ui/index";
     import { useUserStore } from "@/stores/user";
     import { storeToRefs } from "pinia";
@@ -41,15 +49,19 @@
 
     const submit = async () => {
         await Form.value?.validate();
-        const data = await beTenant({ userId: user.value.user_id });
-        setUser({ ...user.value, tenant_id: data });
+        if (user.value.user_id == "000000") {
+            const data = await beTenant({ userId: user.value.user_id });
+            setUser({ ...user.value, tenant_id: data });
+        } else {
+            return console.log(modules.value);
+            // await saveAdminShopModules({ modules: modules.value });
+        }
         await create({
             ...form.value,
             userId: user.value.user_id,
             tenantId: user.value.tenant_id,
             ownerWxUserId: user.value.user_id
         });
-
         ui.showToast("提交成功");
         uni.navigateBack();
         loading.value = false;

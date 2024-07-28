@@ -14,11 +14,11 @@
         { url: "https://pic.rmb.bdstatic.com/bjh/events/5faf8886b25ceb3831aa71e08733e8738534.png@h_1280" }
     ]);
 
-    const { homeModules } = storeToRefs(useCommonStore());
+    // const { homeModules } = storeToRefs(useCommonStore());
 
-    const modules = computed(() => {
-        return homeModules.value;
-    });
+    // const modules = computed(() => {
+    //     return homeModules.value;
+    // });
 </script>
 
 <style lang="scss" scoped></style>

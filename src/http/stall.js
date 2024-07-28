@@ -3,7 +3,7 @@ import request from "./request";
 export const create = data => {
     const { tenant_id } = uni.getStorageSync("accountInfo");
     return request.post({
-        url: `${import.meta.env.VITE_BASE_URL}/blade-mall/shop/save`,
+        url: `${import.meta.env.VITE_BASE_URL}/blade-mall/shop/submit`,
         data,
         header: { "Tenant-Id": tenant_id }
     });
@@ -40,6 +40,15 @@ export const saveAdminShopModules = data => {
     const { tenant_id } = uni.getStorageSync("accountInfo");
     return request.post({
         url: `${import.meta.env.VITE_BASE_URL}/blade-mall/homepagemodules/saveOrUpdateModules`,
+        data,
+        header: { "Tenant-Id": tenant_id }
+    });
+};
+
+export const changeStatus = data => {
+    const { tenant_id } = uni.getStorageSync("accountInfo");
+    return request.post({
+        url: `${import.meta.env.VITE_BASE_URL}/blade-mall/shop/updateShopStatus?id=${data.id}&status=${data.status}`,
         data,
         header: { "Tenant-Id": tenant_id }
     });

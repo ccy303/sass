@@ -11,25 +11,37 @@
             </div>
         </div>
         <div v-else>
-            <base-card>
-                <base-list>
-                    <base-list-item v-for="item in myShop" :key="item.id" :label="item.shopName" swipe="right">
-                        <template #menu>
-                            <div class="flex-center">
-                                <navigator :url="`/subPages/stall/detail?id=${item.id}`" class="mr-5">
-                                    <base-button size="small" type="primary">店铺设置</base-button>
-                                </navigator>
-                                <navigator url="/subPages/goods/categorizeList">
-                                    <base-button size="small" type="warning">商品设置</base-button>
-                                </navigator>
-                            </div>
-                        </template>
-                        <template #append>
-                            <base-text color="info">右滑更多</base-text>
-                        </template>
-                    </base-list-item>
-                </base-list>
-            </base-card>
+            <template v-for="item in myShop" :key="item.id">
+                <base-card :label="item.shopName">
+                    <div class="flex-center justify-start">
+                        <base-text>店铺设置：</base-text>
+                        <navigator :url="`/subPages/stall/detail?id=${item.id}`">
+                            <base-button size="small" type="primary">前往</base-button>
+                        </navigator>
+                    </div>
+                    <div class="mt-10 flex-center justify-start">
+                        <base-text>商品设置：</base-text>
+                        <navigator url="/subPages/goods/categorizeList">
+                            <base-button size="small" type="primary">前往</base-button>
+                        </navigator>
+                    </div>
+                    <div class="mt-10 flex-center justify-start">
+                        <base-text>摊位订单：</base-text>
+                        <navigator url="/subPages/orders/orders">
+                            <base-button size="small" type="primary">前往</base-button>
+                        </navigator>
+                    </div>
+                    <div class="mt-10 flex-center justify-start">
+                        <base-text>营业状态：</base-text>
+                        <base-switch
+                            v-model="item.status"
+                            :activeValue="1"
+                            :inactiveValue="0"
+                            @change="data => statusChange(data, item.id)"
+                        ></base-switch>
+                    </div>
+                </base-card>
+            </template>
         </div>
     </base-page>
 </template>
@@ -37,7 +49,10 @@
 <script setup>
     import { useUserStore } from "@/stores/user";
     import { storeToRefs } from "pinia";
-    import { list } from "@/http/stall";
+    import { list, create } from "@/http/stall";
+    import { useUi } from "@/gxota/ui";
+
+    const ui = useUi();
 
     const user = storeToRefs(useUserStore()).user;
 
@@ -48,6 +63,15 @@
         if (records) {
             myShop.value = records;
         }
+    };
+
+    const statusChange = async (e, id) => {
+        await create({
+            id: id,
+            status: e
+        });
+        ui.showToast("修改成功");
+        getUserStallList();
     };
 
     watch(

@@ -5,16 +5,19 @@
                 <base-form-item label="摊位名称" prop="shopName" required>
                     <base-input v-model="form.shopName" placeholder="请填写分类名称"></base-input>
                 </base-form-item>
+                <base-form-item label="店铺标语" prop="slogan">
+                    <base-textarea v-model="form.slogan"></base-textarea>
+                </base-form-item>
+                <base-form-item label="店铺描述" prop="description">
+                    <base-textarea v-model="form.description"></base-textarea>
+                </base-form-item>
                 <base-divider>模块配置</base-divider>
                 <div v-for="(item, idx) in modules" :key="item.id" :style="{ marginBottom: idx == modules.length - 1 ? '50px' : '' }">
                     <base-card :label="item.title">
                         <base-upload :limit="1"> </base-upload>
                         <template #footer>
                             <div>
-                                <base-switch 
-                                :activeValue="1"
-                                :inactiveValue="0"
-                                v-model="item.status"></base-switch>
+                                <base-switch :activeValue="1" :inactiveValue="0" v-model="item.status"></base-switch>
                             </div>
                         </template>
                     </base-card>
@@ -53,7 +56,7 @@
             const data = await beTenant({ userId: user.value.user_id });
             setUser({ ...user.value, tenant_id: data });
         } else {
-            return console.log(modules.value);
+            // return console.log(modules.value);
             // await saveAdminShopModules({ modules: modules.value });
         }
         await create({

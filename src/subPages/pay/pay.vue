@@ -1,7 +1,8 @@
 <template>
-	<base-page :padding="0" class="container position-relative">
+	<base-page :padding="0">
+	<view class="relative">
 		<view style="padding-bottom: 130rpx">
-			<view class="section-1">
+			<view class="section-1 mb-30rpx">
 				<template v-if="orderStore.orderType == 'takein'">
 					<list-cell class="location">
 						<view class="flex-auto flex justify-between items-center">
@@ -109,7 +110,7 @@
 				<list-cell last>
 					<view class="flex-auto flex justify-end items-center">
 						<view>总计￥{{ total }},实付</view>
-						<view class="font-size-40rpx font-weight-bold">￥{{ amount }}</view>
+						<view class="font-size-40rpx font-bold">￥{{ amount }}</view>
 					</view>
 				</list-cell>
 			</view>
@@ -181,6 +182,7 @@
 				<button type="primary" class="pay_btn" @tap="pay">确认并付款</button>
 			</view>
 		</base-dialog>
+		</view>
 	</base-page>
 </template>
 <script setup>

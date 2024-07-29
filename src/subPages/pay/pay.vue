@@ -29,19 +29,18 @@
 					</list-cell>
 				</template>
 				<template v-if="orderStore.orderType == 'takein'">
-					<list-cell arrow class="meal-time">
+					<!-- <list-cell arrow class="meal-time">
 						<view class="flex-auto flex justify-between items-center">
 							<view class="title">取餐时间</view>
 							<view class="time">立即用餐</view>
 						</view>
-					</list-cell>
+					</list-cell> -->
 					<list-cell class="contact" last :hover="false">
 						<view class="flex-auto flex justify-between items-center">
 							<view class="title flex-auto">联系电话</view>
 							<view class="time">
 								<input class="text-right" placeholder="请输入手机号码" value="18666600000" />
 							</view>
-							<view class="contact-tip font-size-24rpx">自动填写</view>
 						</view>
 					</list-cell>
 				</template>
@@ -95,18 +94,18 @@
 						</list-cell>
 					</template>
 				</view>
-				<list-cell arrow @click="goToPackages">
+				<!-- <list-cell arrow @click="goToPackages">
 					<view class="flex-auto flex justify-between items-center">
 						<view class="c-#5A5B5C">奈雪券</view>
 						<view class="c-#6b69f8">超值购买优惠券大礼包</view>
 					</view>
-				</list-cell>
-				<list-cell arrow>
+				</list-cell> -->
+				<!-- <list-cell arrow>
 					<view class="flex-auto flex justify-between items-center">
 						<view class="c-#5A5B5C">礼品卡</view>
 						<view class="c-#6b69f8">请选择</view>
 					</view>
-				</list-cell>
+				</list-cell> -->
 				<list-cell last>
 					<view class="flex-auto flex justify-end items-center">
 						<view>总计￥{{ total }},实付</view>
@@ -115,24 +114,24 @@
 				</list-cell>
 			</view>
 			<!-- 购物车列表 end -->
-			<view class="flex items-center justify-start font-size-24rpx c-#FAB714"
+			<!-- <view class="flex items-center justify-start font-size-24rpx c-#FAB714"
 				style="padding: 20rpx 0">
 				<view class="iconfont iconhelp line-height-100%"></view>
 				<view>优惠券不与满赠、满减活动共享</view>
-			</view>
+			</view> -->
 			<!-- 支付方式 begin -->
 			<view class="payment">
 				<list-cell last :hover="false">
 					<text>支付方式</text>
 				</list-cell>
-				<list-cell>
+				<!-- <list-cell>
 					<view class="flex items-center justify-between w-full disabled">
 						<view class="iconfont iconbalance line-height-100% payment-icon"></view>
 						<view class="flex-auto">余额支付（余额￥0）</view>
 						<view class="font-size-24rpx">余额不足</view>
 						<view class="iconfont iconradio-button-off line-height-100% checkbox"></view>
 					</view>
-				</list-cell>
+				</list-cell> -->
 				<list-cell last>
 					<view class="flex items-center justify-between w-full">
 						<view class="iconfont iconwxpay line-height-100% payment-icon" style="color: #7eb73a"></view>

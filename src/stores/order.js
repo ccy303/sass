@@ -24,5 +24,8 @@ export const useOrderStore = defineStore('order', {
             //自取、外卖
             this.orderType = type;
         },
+        setAddress(address) {
+            this.address = address;
+        },
     },
   })

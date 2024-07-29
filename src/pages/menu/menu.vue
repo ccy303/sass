@@ -1,10 +1,10 @@
 <template>
-    <view class="container relative overflow-hidden pt-162rpx bg-white" v-if="!loading">
-        <view class="main w-full h-full relative flex flex-col" v-if="goods.length">
+    <view class="relative overflow-hidden pt-162rpx bg-white h-100vh" v-if="!loading">
+        <view class="w-full h-full relative flex flex-col" v-if="goods.length">
             <view class="nav w-full h-212rpx flex-shrink-0 flex flex-col">
                 <view class="header w-full flex items-center justify-between p-20rpx bg-#fffff h-140rpx">
                     <view class="left flex-1 flex flex-col" v-if="orderStore.orderType == 'takein'">
-                        <view class="store-name flex justify-start items-center font-size-4 mb-10rpx">
+                        <view class="store-name flex justify-start items-center font-size-28rpx mb-10rpx">
                             <text>{{ orderStore.store.name }}</text>
                             <view class="iconfont iconarrow-right ml-10rpx line-height-100%"></view>
                         </view>
@@ -25,17 +25,17 @@
                             >配送
                         </view>
                     </view>
-                    <view class="right">
-                        <view class="dinein" :class="{ active: orderStore.orderType == 'takein' }" @tap="SET_ORDER_TYPE('takein')">
+                    <view class="right b-rd-38rpx flex items-center sont-size-24rpx py-0 px-38rpx bg-#f5f5f5 c-#919293">
+                        <view class="dinein relative flex items-center" :class="{ active: orderStore.orderType == 'takein' }" @tap="takein">
                             <text>自取</text>
                         </view>
-                        <view class="takeout" :class="{ active: orderStore.orderType == 'takeout' }" @tap="takout">
+                        <view class="takeout relative flex items-center" :class="{ active: orderStore.orderType == 'takeout' }" @tap="takout">
                             <text>外卖</text>
                         </view>
                     </view>
                 </view>
-                <view class="coupon">
-                    <text class="title">"霸气mini卡"超级购券活动，赶紧去购买</text>
+                <view class="coupon flex-1 w-full font-size-24rpx py-0 px-20rpx flex items-center overflow-hidden">
+                    <text class="title flex-1 ml-10rpx overflow-hidden whitespace-nowrap text-ellipsis">"霸气mini卡"超级购券活动，赶紧去购买</text>
                     <view class="iconfont iconarrow-right"></view>
                 </view>
             </view>
@@ -201,25 +201,25 @@
         <!-- 购物车详情popup -->
         <base-popup direction="bottom" v-model="cartPopupVisible"  class="cart-popup">
             <!-- <template v-slot:content> -->
-                <view class="top">
+                <view class="top py-10rpx px-30rpx font-size-24rpx text-align-right">
                     <text @tap="handleCartClear">清空</text>
                 </view>
-                <scroll-view class="cart-list" scroll-y>
-                    <view class="wrapper">
-                        <view class="item" v-for="(item, index) in cart" :key="index">
-                            <view class="left">
-                                <view class="name">{{ item.name }}</view>
-                                <view class="props">{{ item.props_text }}</view>
+                <scroll-view class="cart-list bg-white w-full overflow-hidden min-h-1vh max-h-60vh" scroll-y>
+                    <view class="wrapper h-full flex flex-col py-0 px-30 mb-156rpx">
+                        <view class="item flex justify-between items-center py-30rpx px-0 relative" v-for="(item, index) in cart" :key="index">
+                            <view class="left flex-1 flex flex-col overflow-hidden mr-30rpx">
+                                <view class="name font-size-24rpx">{{ item.name }}</view>
+                                <view class="props font-size-24rpx overflow-hidden text-ellipsis whitespace-nowrap">{{ item.props_text }}</view>
                             </view>
-                            <view class="center">
+                            <view class="center mr-120rpx font-size-24rpx">
                                 <text>￥{{ item.price }}</text>
                             </view>
-                            <view class="right">
-                                <button type="default" plain size="mini" class="btn" hover-class="none" @tap="handleCartItemReduce(index)">
+                            <view class="right flex items-center justify-between">
+                                <button type="default" plain size="mini" class="btn w-46rpx h-46rpx b-rd-100% p-0 text-center line-height-46rpx" hover-class="none" @tap="handleCartItemReduce(index)">
                                     <view class="iconfont iconsami-select"></view>
                                 </button>
-                                <view class="number">{{ item.number }}</view>
-                                <button type="primary" class="btn" size="min" hover-class="none" @tap="handleCartItemAdd(index)">
+                                <view class="number font-size-24rpx w-46rpx h-46rpx text-center line-height-46rpx">{{ item.number }}</view>
+                                <button type="primary" class="btn w-46rpx h-46rpx b-rd-100% p-0 text-center line-height-46rpx" size="min" hover-class="none" @tap="handleCartItemAdd(index)">
                                     <view class="iconfont iconadd-select"></view>
                                 </button>
                             </view>
@@ -253,9 +253,6 @@
 </template>
 
 <script setup>
-// import modal from "./modal/modal";
-// import popupLayer from "./popup-layer/popup-layer";
-// import {mapState, mapMutations, mapActions, mapGetters} from 'vuex'
 import { onLoad } from '@dcloudio/uni-app'
 import { useOrderStore } from "@/stores/order";
 
@@ -341,13 +338,19 @@ const init = async () => {
     loading.value = false;
     cart.value = uni.getStorageSync("cart") || [];
 };
+
+const takein = () => {
+    orderStore.setOrderType('takein')
+}
+
 const takout = () => {
     if (orderStore.orderType == "takeout") return;
 
-    if (!orderStore.isLogin) {
-        uni.navigateTo({ url: "/pages/login/login" });
-        return;
-    }
+    // 没登录先去登录
+    // if (!orderStore.isLogin) {
+    //     uni.navigateTo({ url: "/pages/login/login" });
+    //     return;
+    // }
 
     uni.navigateTo({
         url: "/pages/address/address?is_choose=true"

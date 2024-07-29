@@ -18,9 +18,11 @@ export const useOrderStore = defineStore('order', {
     actions: {
         async getStore() {
             const store = await api("store");
-            // const store = {}
-            // commit("SET_STORE", store);
             this.store = store
+        },
+        setOrderType(type) {
+            //自取、外卖
+            this.orderType = type;
         },
     },
   })

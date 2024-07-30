@@ -5,7 +5,7 @@
                 <view class="header w-full flex items-center justify-between p-20rpx bg-#fffff h-140rpx">
                     <view class="left flex-1 flex flex-col" v-if="orderStore.orderType == 'takein'">
                         <view class="store-name flex justify-start items-center font-size-28rpx mb-10rpx">
-                            <text>{{ orderStore.store.name }}</text>
+                            <text @tap="goToShopList">{{ orderStore.address.shopName ? orderStore.address.shopName : '请选择店铺' }}</text>
                             <view class="iconfont iconarrow-right ml-10rpx line-height-100%"></view>
                         </view>
                         <view class="store-location flex justify-start items-center c-#919293 font-size-24rpx">
@@ -13,10 +13,10 @@
                             <text>距离您 {{ orderStore.store.distance_text }}</text>
                         </view>
                     </view>
-                    <view class="left overflow-hidden" v-else>
+                    <!-- <view class="left overflow-hidden" v-else>
                         <view class="flex items-center overflow-hidden">
                             <image src="/static/images/order/location.png" style="width: 30rpx; height: 30rpx" class="mr-10"></image>
-                            <view class="font-size-extra-lg text-color-base font-weight-bold text-truncate">
+                            <view class="font-size-extra-lg text-color-base font-bold text-truncate">
                                 {{ orderStore.address.street }}
                             </view>
                         </view>
@@ -24,7 +24,7 @@
                             由<text class="text-color-base" style="margin: 0 10rpx">{{ orderStore.store.name }}</text
                             >配送
                         </view>
-                    </view>
+                    </view> -->
                     <!-- <view class="right b-rd-38rpx flex items-center sont-size-24rpx py-0 px-38rpx bg-#f5f5f5 c-#919293">
                         <view class="dinein relative flex items-center" :class="{ active: orderStore.orderType == 'takein' }" @tap="takein">
                             <text>自取</text>
@@ -75,14 +75,17 @@
                                     <view class="good flex items-center mb-30rpx" v-for="(_good, key) in item.goods" :key="key">
                                         <image :src="_good.images" class="image w-160rpx h-160rpx mr-20rpx b-rd-4" @tap="showGoodDetailModal(item, _good)"></image>
                                         <view class="right flex-1 h-160rpx overflow-hidden flex flex-col items-start justify-between pr-14rpx">
-                                            <text class="name">{{ _good.name }}</text>
-                                            <text class="tips">{{ _good.content }}</text>
-                                            <view class="price_and_action">
-                                                <text class="price">￥{{ _good.originalPrice / 100 }}</text>
-                                                <view class="btn-group" v-if="_good.use_property">
+                                            <text class="name font-size-28rpx mb-10rpx">{{ _good.name }}</text>
+                                            <text class="tips w-full h-40rpx line-height-40rpx overflow-hidden text-ellipsis whitespace-nowrap font-size-24rpx mb-10rpx">{{ _good.content }}</text>
+                                            <view class="price_and_action w-full flex justify-between items-center">
+                                                <view>
+                                                    <text class="font-size-28rpx font-600">￥{{ _good.discountPrice / 100 }}</text>
+                                                    <text class="font-size-26rpx line-through">￥{{ _good.originalPrice / 100 }}</text>
+                                                </view>
+                                                <view class="btn-group flex justify-between items-center relative" v-if="_good.attrs.length > 0">
                                                     <button
                                                         type="primary"
-                                                        class="btn property_btn"
+                                                        class="btn property_btn py-0 px-20rpx box-border font-size-24rpx h-44rpx line-height-44rpx b-rd-24rpx"
                                                         hover-class="none"
                                                         size="mini"
                                                         @tap="showGoodDetailModal(item, _good)"
@@ -91,12 +94,12 @@
                                                     </button>
                                                     <view class="dot" v-show="goodCartNum(_good.id)">{{ goodCartNum(_good.id) }}</view>
                                                 </view>
-                                                <view class="btn-group" v-else>
+                                                <view class="btn-group flex justify-between items-center relative" v-else>
                                                     <button
                                                         type="default"
                                                         v-show="goodCartNum(_good.id)"
                                                         plain
-                                                        class="btn reduce_btn"
+                                                        class="btn reduce_btn py-0 px-20rpx box-border font-size-24rpx h-44rpx line-height-44rpx p-0 w-44rpx b-rd-44rpx"
                                                         size="mini"
                                                         hover-class="none"
                                                         @tap="handleReduceFromCart(item, _good)"
@@ -106,7 +109,7 @@
                                                     <view class="number" v-show="goodCartNum(_good.id)">{{ goodCartNum(_good.id) }}</view>
                                                     <button
                                                         type="primary"
-                                                        class="btn add_btn"
+                                                        class="btn add_btn py-0 px-20rpx box-border font-size-24rpx h-44rpx line-height-44rpx p-0 w-44rpx b-rd-44rpx"
                                                         size="min"
                                                         hover-class="none"
                                                         @tap="handleAddToCart(item, _good, 1)"
@@ -156,7 +159,7 @@
                         <view class="tips font-size-24rpx c-#878889">{{ good.content }}</view>
                     </view>
                     <view class="properties w-full b-t-2rpx b-t-solid b-t-#878889 pt-10rpx pl-30rpx flex flex-col" v-if="good.use_property">
-                        <view class="property w-full flex flex-col mb-30rpx pb--16rpx" v-for="(item, index) in good.property" :key="index">
+                        <view class="property w-full flex flex-col mb-30rpx pb--16rpx" v-for="(item, index) in good.attrs" :key="index">
                             <view class="title w-full flex justify-start items-center mb-20rpx">
                                 <text class="name font-size-26rpx c-#5a5b5c mr-20rpx">{{ item.name }}</text>
                                 <view class="desc flex-1 font-size-24rpx c-#ad8838 overflow-hidden text-ellipsis whitespace-nowrap" v-if="item.desc">({{ item.desc }})</view>
@@ -178,7 +181,7 @@
             </scroll-view>
             <view class="action flex items-center justify-between bg-#f5f5f5 h-120rpx px-26rpx">
                 <view class="left flex-1 flex flex-col justify-center mr-20rpx overflow-hidden">
-                    <view class="price font-size-32rpx c-#5a5b5c">￥{{ good.originalPrice / 100 }}</view>
+                    <view class="price font-size-32rpx c-#5a5b5c">￥{{ good.discountPrice / 100 }}</view>
                     <view class="props font-size-24rpx w-full overflow-hidden text-ellipsis whitespace-nowrap" v-if="getGoodSelectedProps(good)">
                         {{ getGoodSelectedProps(good) }}
                     </view>
@@ -489,7 +492,7 @@ const handleAddToCartInModal = () => {
 };
 const openCartPopup = () => {
     //打开/关闭购物车列表popup
-    console.log('打开/关闭购物车列表popup')
+    console.log('打开/关闭购物车列表popup', cartPopupVisible.value)
     cartPopupVisible.value = !cartPopupVisible.value;
 };
 const handleCartClear = () => {
@@ -532,6 +535,12 @@ const toPay = () => {
     });
     uni.hideLoading();
 };
+
+const goToShopList = () => {
+    uni.navigateTo({
+        url: '/subPages/orders/address?is_choose=true'
+    })
+}
 </script>
 
 <style lang="scss" scoped>

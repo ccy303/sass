@@ -1,7 +1,7 @@
 <template>
     <view class="relative overflow-hidden pt-162rpx bg-white h-100vh" v-if="!loading">
         <view class="w-full h-full relative flex flex-col" v-if="goods.length">
-            <view class="nav w-full h-212rpx flex-shrink-0 flex flex-col">
+            <view class="nav w-full h-137rpx flex-shrink-0 flex flex-col">
                 <view class="header w-full flex items-center justify-between p-20rpx bg-#fffff h-140rpx">
                     <view class="left flex-1 flex flex-col" v-if="orderStore.orderType == 'takein'">
                         <view class="store-name flex justify-start items-center font-size-28rpx mb-10rpx">
@@ -25,19 +25,19 @@
                             >配送
                         </view>
                     </view>
-                    <view class="right b-rd-38rpx flex items-center sont-size-24rpx py-0 px-38rpx bg-#f5f5f5 c-#919293">
+                    <!-- <view class="right b-rd-38rpx flex items-center sont-size-24rpx py-0 px-38rpx bg-#f5f5f5 c-#919293">
                         <view class="dinein relative flex items-center" :class="{ active: orderStore.orderType == 'takein' }" @tap="takein">
                             <text>自取</text>
                         </view>
                         <view class="takeout relative flex items-center" :class="{ active: orderStore.orderType == 'takeout' }" @tap="takout">
                             <text>外卖</text>
                         </view>
-                    </view>
+                    </view> -->
                 </view>
-                <view class="coupon flex-1 w-full font-size-24rpx py-0 px-20rpx flex items-center overflow-hidden">
+                <!-- <view class="coupon flex-1 w-full font-size-24rpx py-0 px-20rpx flex items-center overflow-hidden">
                     <text class="title flex-1 ml-10rpx overflow-hidden whitespace-nowrap text-ellipsis">"霸气mini卡"超级购券活动，赶紧去购买</text>
                     <view class="iconfont iconarrow-right"></view>
-                </view>
+                </view> -->
             </view>
             <view class="content flex-1 overflow-hidden w-full flex">
                 <scroll-view class="menus w-200rpx h-full overflow-hidden bg-#f5f5f5" :scroll-into-view="menuScrollIntoView" scroll-with-animation scroll-y>
@@ -145,7 +145,7 @@
             <view class="cover h-320rpx py-30rpx flex justify-center items-center relative">
                 <image v-if="good.images" :src="good.images" class="image w-260rpx h-260rpx"></image>
                 <view class="btn-group absolute right-10 top-0 flex items-center justify-around">
-                    <image class="w-80rpx h-80rpx" src="/static/images/menu/share-good.png"></image>
+                    <!-- <image class="w-80rpx h-80rpx" src="/static/images/menu/share-good.png"></image> -->
                     <image class="w-80rpx h-80rpx" src="/static/images/menu/close.png" @tap="closeGoodDetailModal"></image>
                 </view>
             </view>

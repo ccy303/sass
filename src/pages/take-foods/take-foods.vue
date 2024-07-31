@@ -1,12 +1,13 @@
 <template>
-  <base-page class="container">
+  <base-page :padding="0">
+  <view>
     <div v-if="!Object.keys(order).length" class="flex w-full h-full flex-col justify-center items-center bg-white">
       <image src="/static/images/loading.gif" class="drinks-img"></image>
       <view class="tips flex flex-col items-center font-size-28rpx text-color-assist">
         <view>您还没有点单</view>
         <view>快去犒劳一下自己吧~</view>
       </view>
-      <button type="primary" class="drink-btn" size="default" @tap="menu">去点餐</button>
+      <button type="primary" class="drink-btn w-320rpx b-rd-50rpx mb-40rpx font-size-28rpx line-height-3rpx" size="default" @tap="menu">去点餐</button>
       <view class="font-size-24rpx text-color-primary" @tap="orders">查看历史订单</view>
     </div>
     <template v-else>
@@ -172,6 +173,7 @@
         </view>
       </view>
     </template>
+  </view>
   </base-page>
 </template>
 

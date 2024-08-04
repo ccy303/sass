@@ -14,7 +14,13 @@
                 <base-divider>模块配置</base-divider>
                 <div v-for="(item, idx) in modules" :key="item.id" :style="{ marginBottom: idx == modules.length - 1 ? '50px' : '' }">
                     <base-card :label="item.title">
-                        <base-upload v-model="item.image" :limit="item.moduleType == 8 ? 6 : 1" :url="url" :requestOption="requestOption" />
+                        <base-upload
+                            v-model="item.image"
+                            :limit="item.moduleType == 8 ? 6 : 1"
+                            :url="url"
+                            :requestOption="{ ...requestOption, formData: { refId: item.id } }"
+                            @delete="data => imageDel(data, item.id)"
+                        />
                         <template #footer>
                             <div>
                                 <base-switch :activeValue="1" :inactiveValue="0" v-model="item.status"></base-switch>
@@ -50,6 +56,7 @@
     const form = ref({});
     const loading = ref(false);
     const modules = ref([]);
+    const deleteFiles = ref([]);
 
     const ui = useUi();
 
@@ -76,7 +83,7 @@
                 }
                 return data;
             });
-            await saveAdminShopModules({ homepageModulesDTOS: body, deleteFiles: [] });
+            await saveAdminShopModules({ homepageModulesDTOS: body, deleteFiles: deleteFiles.value });
         }
         await create({
             ...form.value,
@@ -86,6 +93,7 @@
         });
         ui.showToast("提交成功");
         uni.navigateBack();
+        deleteFiles.value = [];
         loading.value = false;
     };
 
@@ -98,8 +106,17 @@
         form.value = data;
     };
 
+    const imageDel = async (data, id) => {
+        deleteFiles.value.push(data.data.attachId);
+    };
+
     const getModules = async () => {
         const data = await getAdminShopModules({ shopId: form.value.id });
+        data.map(item => {
+            item.image = item.moduleImageList.map(img => {
+                return { thumb: img.imageUrl, url: img.imageUrl, status: "success", data: { addressList: [img.imageUrl], attachId: img.attachId } };
+            });
+        });
         modules.value = data;
     };
 

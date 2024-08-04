@@ -1,11 +1,11 @@
-export const fileUpload = (url = `${import.meta.env.VITE_BASE_URL}/blade-resource/oss/endpoint/put-file`, name, filePath, header) => {
+export const fileUpload = (url = `${import.meta.env.VITE_BASE_URL}/blade-resource/oss/endpoint/put-file`, name, filePath, options) => {
     return new Promise((resolve, reject) => {
         uni.showLoading({ title: "文件上传中", mask: true });
         uni.uploadFile({
             url,
             filePath,
             name,
-            header: header,
+            ...options,
             success: res => {
                 uni.hideLoading();
                 const { data: response } = res;

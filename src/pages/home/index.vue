@@ -1,6 +1,20 @@
 <template>
     <base-page :widthNav="false" :padding="0">
-        <base-banner :list="urls" :height="500"></base-banner>
+        <template v-if="banner.status">
+            <base-banner v-if="banner.status" :list="banner.imgs" :height="500"></base-banner>
+        </template>
+        <div class="p-10">
+            <base-grid :column="2" :border="false">
+                <base-grid-item v-for="item in modules" :key="item.id">
+                    <div class="size-100% flex-center flex-col mt-10">
+                        <div class="border-rd-10 overflow-hidden">
+                            <base-image :size="[200, 200]" :src="item.moduleImageList[0].imageUrl" />
+                        </div>
+                        <base-text>{{ item.description }}</base-text>
+                    </div>
+                </base-grid-item>
+            </base-grid>
+        </div>
     </base-page>
 </template>
 
@@ -8,17 +22,19 @@
     import { useCommonStore } from "@/stores/common";
     import { storeToRefs } from "pinia";
 
-    const urls = ref([
-        { url: "https://img2.baidu.com/it/u=304293407,1878548733&fm=253&fmt=auto&app=120&f=JPEG?w=801&h=500" },
-        { url: "https://img2.baidu.com/it/u=2019266491,4237591550&fm=253&fmt=auto&app=120&f=JPEG?w=500&h=667" },
-        { url: "https://pic.rmb.bdstatic.com/bjh/events/5faf8886b25ceb3831aa71e08733e8738534.png@h_1280" }
-    ]);
+    const { homeModules } = storeToRefs(useCommonStore());
 
-    // const { homeModules } = storeToRefs(useCommonStore());
+    const modules = computed(() => {
+        return homeModules.value?.filter(item => item.moduleType != 8 && item.status == 1);
+    });
 
-    // const modules = computed(() => {
-    //     return homeModules.value;
-    // });
+    const banner = computed(() => {
+        const target = homeModules.value.find(item => item.moduleType == 8) || {};
+        return {
+            status: target.status,
+            imgs: target.moduleImageList.map(img => ({ url: img.imageUrl })) || []
+        };
+    });
 </script>
 
 <style lang="scss" scoped></style>

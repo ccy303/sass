@@ -43,10 +43,11 @@
             sourceType: { default: () => ["album", "camera"], type: Array },
             limit: { default: 9, type: Number },
             disabled: { default: false, type: Boolean },
-            url: { type: String, default: import.meta.env.VITE_BASE_URL }
+            url: { type: String, default: import.meta.env.VITE_BASE_URL },
+            requestOption: { type: Object, default: () => ({}) }
         },
 
-        emits: ["update:modelValue"],
+        emits: ["update:modelValue", "delete"],
 
         setup(props, { emit }) {
             const fileList = ref([]);
@@ -54,6 +55,10 @@
             watch(
                 () => props.modelValue,
                 data => {
+                    if (!data || !data?.length) {
+                        fileList.value = [];
+                        return;
+                    }
                     for (let i = 0, item; (item = data[i++]); ) {
                         const target = fileList.value.find(it => it.url == item.url);
                         !target && fileList.value.push(item);
@@ -73,11 +78,14 @@
                         const _files = files.tempFiles.slice(0, props.limit - len);
                         for (let i = 0, file; (file = _files[i++]); ) {
                             const { tempFilePath, fileType, thumbTempFilePath } = file;
-                            fileUpload(`${props.url}/resource/oss/minappUpload`, "file", tempFilePath)
+                            fileUpload(`${props.url}`, "file", tempFilePath, {
+                                ...props.requestOption
+                            })
                                 .then(res => {
                                     fileList.value.push({
                                         thumb: fileType == "video" ? thumbTempFilePath : tempFilePath,
                                         url: res.url,
+                                        data: res,
                                         status: "success"
                                     });
                                     onChange();
@@ -119,13 +127,14 @@
                 const [data] = _list.splice(idx, 1);
                 fileList.value = _list;
                 data.status == "success" && onChange();
+                emit("delete", data);
             };
 
             const uploadAgain = async idx => {
                 const _list = Array.from(fileList.value);
                 const file = _list[idx];
-                const res = await fileUpload(`${props.url}/resource/oss/minappUpload`, "file", file.url);
-                _list[idx] = { thumb: file.thumb, url: res.url, status: "success" };
+                const res = await fileUpload(`${props.url}`, "file", file.url, { ...props.requestOption });
+                _list[idx] = { thumb: file.thumb, url: res.url, status: "success", data: res };
                 fileList.value = _list;
                 onChange();
             };

@@ -2,23 +2,30 @@ import { logRequest, logReponse } from "./logger";
 import { encryptBase64, encryptWithAes, generateAesKey, decryptWithAes, decryptBase64 } from "@/utils/crypto";
 import { encrypt, decrypt } from "@/utils/jsencrypt";
 
-const request = async (options, errToast = true) => {
+export const header = () => {
     const accessToken = uni.getStorageSync("accessToken");
-    const shopTenantId = uni.getStorageSync("shopTenantId");
 
+    const header = {
+        Authorization: "Basic c3dvcmQ6c3dvcmRfc2VjcmV0",
+        "Tenant-Id": uni.getStorageSync("shopTenantId")
+    };
+
+    if (accessToken) {
+        header["Blade-Auth"] = `Bearer ${accessToken}`;
+    }
+
+    return header;
+};
+
+const request = async (options, errToast = true) => {
     const config = { ...options };
 
     const { isEncrypt } = config.headers || {};
 
     const headers = {
-        Authorization: "Basic c3dvcmQ6c3dvcmRfc2VjcmV0",
-        "Tenant-Id": shopTenantId,
+        ...header(),
         ...config.header
     };
-
-    if (accessToken) {
-        headers["Blade-Auth"] = `Bearer ${accessToken}`;
-    }
 
     logRequest({ ...config, header: headers });
 

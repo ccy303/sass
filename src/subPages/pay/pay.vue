@@ -186,7 +186,6 @@
 </template>
 <script setup>
 import listCell from "./list-cell/list-cell";
-// import modal from "@/pages/menu/modal/modal";
 import orders from "@/http/data/orders";
 import { useOrderStore } from "@/stores/order";
 import { onLoad } from "@dcloudio/uni-app";

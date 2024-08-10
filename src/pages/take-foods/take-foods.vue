@@ -1,7 +1,7 @@
 <template>
   <base-page :padding="0">
   <view>
-    <div v-if="!Object.keys(order).length" class="flex w-full h-full flex-col justify-center items-center bg-white">
+    <div v-if="!Object.keys(order).length" class="flex w-full h-full flex-col justify-center items-center pt-4">
       <image src="/static/images/loading.gif" class="drinks-img"></image>
       <view class="tips flex flex-col items-center font-size-28rpx text-color-assist">
         <view>您还没有点单</view>

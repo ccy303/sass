@@ -13,31 +13,7 @@
                             <text>距离您 {{ orderStore.store.distance_text }}</text>
                         </view>
                     </view>
-                    <!-- <view class="left overflow-hidden" v-else>
-                        <view class="flex items-center overflow-hidden">
-                            <image src="/static/images/order/location.png" style="width: 30rpx; height: 30rpx" class="mr-10"></image>
-                            <view class="font-size-extra-lg text-color-base font-bold text-truncate">
-                                {{ orderStore.address.street }}
-                            </view>
-                        </view>
-                        <view class="font-size-sm text-color-assist overflow-hidden text-truncate">
-                            由<text class="text-color-base" style="margin: 0 10rpx">{{ orderStore.store.name }}</text
-                            >配送
-                        </view>
-                    </view> -->
-                    <!-- <view class="right b-rd-38rpx flex items-center sont-size-24rpx py-0 px-38rpx bg-#f5f5f5 c-#919293">
-                        <view class="dinein relative flex items-center" :class="{ active: orderStore.orderType == 'takein' }" @tap="takein">
-                            <text>自取</text>
-                        </view>
-                        <view class="takeout relative flex items-center" :class="{ active: orderStore.orderType == 'takeout' }" @tap="takout">
-                            <text>外卖</text>
-                        </view>
-                    </view> -->
                 </view>
-                <!-- <view class="coupon flex-1 w-full font-size-24rpx py-0 px-20rpx flex items-center overflow-hidden">
-                    <text class="title flex-1 ml-10rpx overflow-hidden whitespace-nowrap text-ellipsis">"霸气mini卡"超级购券活动，赶紧去购买</text>
-                    <view class="iconfont iconarrow-right"></view>
-                </view> -->
             </view>
             <view class="content flex-1 overflow-hidden w-full flex">
                 <scroll-view class="menus w-200rpx h-full overflow-hidden bg-#f5f5f5" :scroll-into-view="menuScrollIntoView" scroll-with-animation scroll-y>
@@ -58,11 +34,6 @@
                 <!-- goods list begin -->
                 <scroll-view class="goods flex-1 h-full overflow-hidden bg-#ffffff" scroll-with-animation scroll-y :scroll-top="cateScrollTop" @scroll="handleGoodsScroll">
                     <view class="wrapper w-full h-full p-20rpx">
-                        <!-- <swiper class="ads" id="ads" autoplay :interval="3000" indicator-dots>
-                            <swiper-item v-for="(item, index) in ads" :key="index">
-                                <image class="w-full h-full b-rd-8rpx" :src="item.image"></image>
-                            </swiper-item>
-                        </swiper> -->
                         <view class="list w-full font-size-28rpx pb-120rpx">
                             <!-- category begin -->
                             <view class="category w-full" v-for="(item, index) in goods" :key="index" :id="`cate-${item.id}`">
@@ -258,20 +229,11 @@
 <script setup>
 import { onLoad } from '@dcloudio/uni-app'
 import { useOrderStore } from "@/stores/order";
-
-import $api from '@/http/data'
 import { getCategoryHomeList } from "@/http/goods";
 
 const orderStore = useOrderStore();
 
 const goods = ref([]);
-const ads = ref([
-    {image: 'https://img-shop.qmimg.cn/s23107/2020/04/27/4ebdb582a5185358c4.jpg?imageView2/2/w/600/h/600'},
-    {image: 'https://images.qmai.cn/s23107/2020/05/08/c25de6ef72d2890630.png?imageView2/2/w/600/h/600'},
-    {image: 'https://img-shop.qmimg.cn/s23107/2020/04/10/add546c1b1561f880d.jpg?imageView2/2/w/600/h/600'},
-    {image: 'https://images.qmai.cn/s23107/2020/04/30/b3af19e0de8ed42f61.jpg?imageView2/2/w/600/h/600'},
-    {image: 'https://img-shop.qmimg.cn/s23107/2020/04/17/8aeb78516d63864420.jpg?imageView2/2/w/600/h/600'}
-]);
 const loading = ref(true);
 const currentCateId = ref(6905);
 const cateScrollTop = ref(0);
@@ -382,34 +344,7 @@ const handleGoodsScroll = ({ detail }) => {
         currentCateId.value = tabs[0].id;
     }
 };
-const calcSize = () => {
-    let h = 10;
 
-    let view = uni.createSelectorQuery().select("#ads");
-    view.fields(
-        {
-            size: true
-        },
-        data => {
-            h += Math.floor(data.height);
-        }
-    ).exec();
-
-    goods.value.forEach(item => {
-        let view = uni.createSelectorQuery().select(`#cate-${item.id}`);
-        view.fields(
-            {
-                size: true
-            },
-            data => {
-                item.top = h;
-                h += data.height;
-                item.bottom = h;
-            }
-        ).exec();
-    });
-    sizeCalcState.value = true;
-};
 const handleAddToCart = (cate, good, num) => {
     //添加到购物车
     const index = cart.value.findIndex(item => {
